@@ -43,9 +43,8 @@ const Footer=()=>
         <div className="push"></div>
       </div>
       <footer>
-        <p>Created & Designed by &copy; Copyright 2020</p>
+        <p>Created & Designed by BICS &copy; Copyright 2020</p>
       </footer>
-
             </div>
     );
 };
