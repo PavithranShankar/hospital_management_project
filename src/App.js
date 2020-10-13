@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />       
-        <h2>Hospital Management</h2>
+        <h2>Hospital Management System</h2>
       </header>
     </div>
   );
