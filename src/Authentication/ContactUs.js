@@ -1,10 +1,11 @@
 import React from "react";
+import Datepicker from 'react-date-picker'
 import { AvForm, AvField } from "availity-reactstrap-validation";
 import {Link} from "react-router-dom";
 
 
 
-const Register=()=>
+const ContactUs=()=>
 {
 
 
@@ -17,27 +18,17 @@ const Register=()=>
     	<div className="col-md-4 col-md-offset-4 mx-auto mt-5 p-4 loginborder">
     		<div className="panel panel-default">
 			  	<div className="panel-heading">
-			    	<h3 className="panel-title">Sign Up</h3>
+			    	<h3 className="panel-title">Contact Us</h3>
 			 	</div>
 			  	<div className="panel-body">
         <AvForm className="register-form" >
 
         <div className="form-group">
         <AvField
-                  name="FirstName"
-                  id="FirstName"
+                  name="Name"
+                  id="Name"
                   type="text"
-                  placeholder="FirstName"
-                  className="form-control"               
-                />
-			    		    
-			  </div>
-              <div className="form-group">
-        <AvField
-                  name="LastName"
-                  id="LastName"
-                  type="text"
-                  placeholder="LastName"
+                  placeholder="Name"
                   className="form-control"               
                 />
 			    		    
@@ -59,22 +50,26 @@ const Register=()=>
             </div>
         <div className="form-group">
         <AvField
-                  name="Password"
-                  id="Password"
-                  type="Password"
-                  placeholder="Password"
+                  name="PhoneNumber"
+                  id="PhoneNumber"
+                  type="number"
+                  placeholder="PhoneNumber"
                   className="form-control"               
                 />
 			    		    
 			  </div>
               <div className="form-group">
-        <AvField
-                  name="ConfirmPassword"
-                  id="ConfirmPassword"
-                  type="Password"
-                  placeholder="ConfirmPassword"
-                  className="form-control"               
-                />
+              <AvField
+                name="message"
+                cols="3"
+                rows="3"
+                id="message"
+                errorMessage="Please enter the Message"
+                type="textarea"
+                className="form-control"
+                placeholder="Please enter the Message"
+                
+              />
 			    		    
 			  </div>
 
@@ -86,16 +81,11 @@ const Register=()=>
                     className="btn btn-lg btn-success btn-block"
                                      
                 >
-                   Sign Up
+                   Submit
                 </button>
                 </div>
         </AvForm>
-        <hr/>
-                    <center><h4>OR</h4></center>
-                    Already have an account?
-                    <Link to="/login">
-                    <button className="btn btn-lg btn-facebook btn-block" type="submit">Login</button>
-                    </Link>
+       
         </div>
         </div>
         </div>
@@ -109,4 +99,4 @@ const Register=()=>
     );
 };
 
-export default Register;
+export default ContactUs;

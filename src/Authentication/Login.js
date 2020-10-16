@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Button, FormGroup,Form,Label,Input } from "reactstrap";
+import { AvForm, AvField } from "availity-reactstrap-validation";
+import {Link} from "react-router-dom"
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -20,31 +22,83 @@ const Login = () => {
     }
 };
 
+
   return(
-    <Form className="login-form" onSubmit={handleSubmit}>
-        <FormGroup>
-      <Label className="login-header">Log-In</Label>
-      <br />
-    <Label className="login-label">Email</Label>
-      <Input type="email" placeholder="Email" />
-      </FormGroup>
-      <br />
-      <FormGroup>
-        <Label className="login-label">Password</Label>
-      <Input type="password" placeholder="Password" />
-      </FormGroup>
-      <br />
-      <Button className="btn-lg btn-dark btn-block">
-        Log-In
-      </Button>
-      <br />
-      <div className="text-center pt-3" style={{textAlign:"center"}}>
-        <a href="/sign-up">Sign up</a>
-        <span className="p-2"> | </span>
-        <a href="/forgetpassword">Forgot Password</a>
-      </div>
-    </Form>
-  );
+
+    <React.Fragment>
+    <div>
+    <div className="container ">
+    <div className="row ">
+    	<div className="col-md-4 col-md-offset-4 mx-auto mt-5 p-4 loginborder">
+    		<div className="panel panel-default">
+			  	<div className="panel-heading">
+			    	<h3 className="panel-title">Login</h3>
+			 	</div>
+			  	<div className="panel-body">
+        <AvForm className="register-form" >
+
+        <div className="form-group">
+        <AvField
+                  name="UserName"
+                  id="UserName"
+                  type="text"
+                  placeholder="UserName"
+                  className="form-control"               
+                />
+			    		    
+			  </div>
+        <div className="form-group">
+        <AvField
+                  name="Password"
+                  id="Password"
+                  type="Password"
+                  placeholder="Password"
+                  className="form-control"               
+                />
+			    		    
+			  </div>
+        <div className="checkbox">
+			    	    	<label>
+                  <AvField
+                  name="remember"
+                  id="PatientName"
+                  type="checkbox"
+                  placeholder="Ramesh"
+                  className="form-control"               
+                />
+			    	    	
+			    	    	</label> Remember Me
+			    	    </div>
+
+&nbsp;       
+        <div>
+
+             
+                <button 
+                    type="submit" 
+                    className="btn btn-lg btn-success btn-block"
+                                     
+                >
+                   Login
+                </button>
+                </div>
+        </AvForm>
+        <hr/>
+                    <center><h4>OR</h4></center>
+                    Don't have an account?
+                    <Link to="/register">
+                    <button className="btn btn-lg btn-facebook btn-block" type="submit">Sign-Up</button>
+                    </Link>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+      
+        </React.Fragment>
+    
+     );
 };
 
 export default Login;
