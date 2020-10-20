@@ -87,7 +87,7 @@ const Login = () => {
                     <center><h4>OR</h4></center>
                     Don't have an account?
                     <Link to="/register">
-                    <button className="btn btn-lg btn-facebook btn-block" type="submit">Sign-Up</button>
+                    <button className="btn btn-lg btn-facebook btn-block btn_color" type="submit">Sign-Up</button>
                     </Link>
         </div>
         </div>

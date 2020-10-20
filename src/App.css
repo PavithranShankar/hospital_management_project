@@ -46,7 +46,7 @@
 
 
 .navbar {
-  background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+  background: linear-gradient(90deg, rgb(89, 117, 240) 0%, rgb(107, 206, 231) 100%);
   height: 80px;
   display: flex;
   justify-content: center;
@@ -208,6 +208,12 @@
   background-color: var(--primary);
 }
 
+.btn_inch
+{
+  font-size: 1.5rem !important;
+  color: #fff !important;
+}
+
 .btn:hover {
   padding: 6px 18px;
   transition: all 0.3s ease-out;
@@ -220,14 +226,14 @@
 
 /* ----------------------------------------------- */
 .white{
-  color:#000;
+  color:rgb(248, 247, 247);
   background-color:#fff;
 }
 
 .btn-facebook {
   color: #ffffff;
-  -webkit-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  -webkit-text-shadow: 0 -1px 0 rgb(248, 246, 246);
+  text-shadow: 0 -1px 0 rgb(248, 248, 248);
   background-color: #2b4b90;
   *background-color: #133783;
   background-image: -moz-linear-gradient(top, #3b5998, #133783);
@@ -237,7 +243,7 @@
   background-image: linear-gradient(to bottom, #3b5998, #133783);
   background-repeat: repeat-x;
   border-color: #133783 #133783 #091b40;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  border-color: rgb(247, 247, 247) rgb(248, 244, 244) rgb(253, 251, 251);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3b5998', endColorstr='#ff133783', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
@@ -258,7 +264,12 @@
       background-color: #0d2456 \9 !important;
   }
 
+  .btn_color
+  {
+    color:#ffffff !important;
+  }
+
   .loginborder
   {
-    border: 2px solid black;
+    border: 2px solid rgb(248, 242, 242);
   }

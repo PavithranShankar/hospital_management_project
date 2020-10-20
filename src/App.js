@@ -8,6 +8,7 @@ import Patient from './Patient/Patient';
 import { ToastProvider } from "react-toast-notifications";
 import Nav_Bar from './Statup_Pages/Nav';
 import ContactUs from './Authentication/ContactUs';
+import DatePickerPage from './Patient/calender';
 
 
 const App=()=>
@@ -23,6 +24,8 @@ const App=()=>
           <Route path="/register" exact component={Register}/>
           <Route path="/patient" exact component={Patient}/>
           <Route path="/contact_us" exact component={ContactUs}/>
+          <Route path="/DatePickerPage" exact component={DatePickerPage}/>
+
 
         </Switch>
         {/* <HomeContent/> 

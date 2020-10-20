@@ -94,7 +94,7 @@ const Register=()=>
                     <center><h4>OR</h4></center>
                     Already have an account?
                     <Link to="/login">
-                    <button className="btn btn-lg btn-facebook btn-block" type="submit">Login</button>
+                    <button className="btn btn-lg btn-facebook btn-block btn_color" type="submit">Login</button>
                     </Link>
         </div>
         </div>

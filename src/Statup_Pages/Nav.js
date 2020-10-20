@@ -22,30 +22,33 @@ const Nav_Bar = () =>
         </div>
         <ul className={click ? "nav-menu active" : "nav-menu"}>
           <li className="nav-item">
-            <Link to="/" className="nav-links">
-              Home
+            <Link to="/" >
+            <button className ='btn btn_inch'>
+            Home
+            </button>
             </Link>
           </li>
                    
           <li className="nav-item">
             <Link
-              to="/contact_us"
-              className="nav-links"
-              
+              to="/contact_us"                         
             >
+              <button className ='btn btn_inch'>
               Contact Us
+            </button>
+              
             </Link>
           </li>
-          <li className="nav-item">
+          <li className="nav-item ">
           <Link to='/register'>
-            <button className ='btn'>
+            <button className ='btn btn_inch'>
                 Sign up
             </button>
         </Link>
           </li>
           <li className="nav-item">
           <Link to='/login'>
-            <button className ='btn'>
+            <button className ='btn btn_inch'>
                 Log in
             </button>
         </Link>
