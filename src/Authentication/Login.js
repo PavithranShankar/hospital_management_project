@@ -1,25 +1,58 @@
 import React, { useState } from "react";
-import { Button, FormGroup,Form,Label,Input } from "reactstrap";
 import { AvForm, AvField } from "availity-reactstrap-validation";
-import {Link} from "react-router-dom"
+import {Link,useHistory} from "react-router-dom"
+import { useToasts } from "react-toast-notifications";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { addToast } = useToasts();
+  const history =useHistory();
+
+  const redirect=()=>
+  {
+    history.push({
+      pathname: "/",
+     
+    });
+  }
 
   const handleSubmit = async e => {
+    
     e.preventDefault();
     if(email==="")
     {
-      alert("Please enter the usename");
+      addToast("Plz Enter the Valid UserName!", {
+        appearance: "error",
+        autoDismiss: true
+      });
     }
     else if(password==="")
     {
-      alert("Please enter the password");
+      addToast("Plz Enter the Valid UserName!", {
+        appearance: "error",
+        autoDismiss: true
+      });
     }
-    else{
-      alert("Login sucessfully");
+    else if((email==="pavith@gmail.com")&&(password==="Pavith@123"))
+    {
+      addToast("Logged In Successfully!", {
+      appearance: "success",
+      autoDismiss: true
+    });
+    redirect();
+
     }
+    else 
+    {
+       addToast("Plz Check the UserName and Password!", {
+      appearance: "error",
+      autoDismiss: true
+    });
+
+    }
+       
 };
 
 
@@ -43,6 +76,7 @@ const Login = () => {
                   id="UserName"
                   type="text"
                   placeholder="UserName"
+                  onChange={(e)=>{setEmail(e.target.value)}}
                   className="form-control"               
                 />
 			    		    
@@ -53,6 +87,7 @@ const Login = () => {
                   id="Password"
                   type="Password"
                   placeholder="Password"
+                  onChange={(e)=>{setPassword(e.target.value)}}
                   className="form-control"               
                 />
 			    		    
@@ -70,13 +105,12 @@ const Login = () => {
 			    	    	</label> Remember Me
 			    	    </div>
 
-&nbsp;       
+                &nbsp;       
         <div>
-
-             
                 <button 
                     type="submit" 
                     className="btn btn-lg btn-success btn-block"
+                    onClick={handleSubmit}
                                      
                 >
                    Login
@@ -86,7 +120,7 @@ const Login = () => {
         <hr/>
                     <center><h4>OR</h4></center>
                     Don't have an account?
-                    <Link to="/register">
+                    <Link to="/Register_as_Patient">
                     <button className="btn btn-lg btn-facebook btn-block btn_color" type="submit">Sign-Up</button>
                     </Link>
         </div>

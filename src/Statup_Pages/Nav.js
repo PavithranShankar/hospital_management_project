@@ -40,9 +40,16 @@ const Nav_Bar = () =>
             </Link>
           </li>
           <li className="nav-item ">
-          <Link to='/register'>
+          <Link to='/Register_as_Doctor'>
             <button className ='btn btn_inch'>
-                Sign up
+                Sign up as Doctor
+            </button>
+        </Link>
+          </li>
+          <li className="nav-item ">
+          <Link to='/Register_as_Patient'>
+            <button className ='btn btn_inch'>
+            Sign up as Patient
             </button>
         </Link>
           </li>

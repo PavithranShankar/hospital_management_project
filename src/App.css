@@ -1,3 +1,5 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/react-datepicker/2.8.0/react-datepicker.min.css');
+
 *{
   box-sizing: border-box;
   margin: 0px;
@@ -14,6 +16,11 @@
   align-items: center;
   justify-content: center;
   font-size: 3rem;
+}
+
+.dt_box
+{
+  padding-right: 150px !important;
 }
 
 .home {
