@@ -35,7 +35,7 @@ const Login = () => {
         autoDismiss: true
       });
     }
-    else if((email==="pavith@gmail.com")&&(password==="Pavith@123"))
+    else if((email!=="")&&(password!==""))
     {
       addToast("Logged In Successfully!", {
       appearance: "success",
