@@ -11,6 +11,7 @@ import DatePickerPage from './Patient/calender';
 import Register_as_Doctor from './Authentication/Register_as_Doctor';
 import Register_as_Patient from './Authentication/Register_as_Patient';
 import Doctor_page from './Doctor/Doctor';
+import Calendarform from './Scheduler/Calendarform';
 
 
 const App=()=>
@@ -29,7 +30,7 @@ const App=()=>
           <Route path="/Register_as_Doctor" exact component={Register_as_Doctor}/>
           <Route path="/Register_as_Patient" exact component={Register_as_Patient}/>
           <Route path="/Doctor_page" exact component={Doctor_page}/>
-
+          <Route path="/calendar" exact component={Calendarform} />
 
 
 

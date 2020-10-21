@@ -280,3 +280,37 @@
   {
     border: 2px solid rgb(248, 242, 242);
   }
+
+  .fc {
+    height: 550px;
+    width: 1284px;
+    text-align: center;
+    padding-left: 50px;
+    padding-top: 12px;
+  }
+
+  #calendar-container{
+    
+}
+
+.fc-header-toolbar {
+  /*
+  the calendar will be butting up against the edges,
+  but let's scoot in the header's buttons
+  */
+  padding-top: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.sch-modal .modal-header {
+  background: #23497c;
+  color: #fff;
+  font-weight: bold;
+}
+.sch-modal .modal-header button.close {
+  font-size: 34px;
+  color: #fff;
+  opacity: 1;
+  border: none;
+}
