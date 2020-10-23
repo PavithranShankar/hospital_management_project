@@ -37,6 +37,8 @@ const Calendarform = () => {
     seteventedit(false);
     seteventedit(false);
     setpastdate(false);
+    setstartdateval("");
+    setdsendtime("");
   };
 
     const handleDateSelect = (arg) => {
@@ -249,11 +251,14 @@ const Calendarform = () => {
                     { title: 'High Sugar',Doctor: 'Arunkumar', start: '2020-10-27T15:30:00',end:'2020-10-28T16:30:00' },
                 ]}
             />
+            <div>
+              <p>Footer</p>
+            </div>
       </div>
       <div>
       <Modal show={dateselect} onHide={hideModals} className="sch-modal">
         <Modal.Header closeButton>
-          <h5>Doctor Appointment</h5>
+          <h5>Create Doctor Appointment</h5>
         </Modal.Header>
         <Modal.Body style={{paddingLeft: "30px"}}>
         <AvForm className="register-form" onSubmit={Confirm} >
@@ -270,7 +275,7 @@ const Calendarform = () => {
                         onChange={handleStartChange}
                          />
                          <input 
-                         style={{ width: "100px", marginLeft: "20px"}}
+                         className="lb_box"
                          type="text"
                          value={dsstarttime || "12:00 am"}
                          readOnly={true}
@@ -288,8 +293,8 @@ const Calendarform = () => {
                         required
                         onChange={handleEndChange} 
                         />
-                        <input 
-                          style={{ width: "100px", marginLeft: "20px"}}
+                        <input
+                          className="lb_box"
                           type="text"
                           value={dsendtime || "12:00 am"}
                           readOnly={true}
@@ -354,7 +359,7 @@ const Calendarform = () => {
               />
               </div>
               <div className="form-group mx-auto" style={{textAlign:"end"}}> 
-              <button style={{backgroundColor:" #23497c"}}
+              <button style={{backgroundColor:" #0078d4"}}
                     type="submit" 
                     className="btn btn-primary "        
                 >
@@ -362,7 +367,7 @@ const Calendarform = () => {
                 </button>
                 <button
                   type="button" 
-                  style={{backgroundColor:" #23497c", width: "91px",height: "38px", marginLeft: "15px"}}
+                  style={{backgroundColor:" #0078d4", width: "91px",height: "38px", marginLeft: "15px"}}
                   onClick={handelcancel} 
                   className="btn btn-primary "
                   >Cancel</button>
@@ -392,7 +397,7 @@ const Calendarform = () => {
                 <div className="form-group">
                 </div>
               <div className="form-group mx-auto" style={{textAlign:"center"}}> 
-              <button style={{backgroundColor:" #23497c"}}
+              <button style={{backgroundColor:" #0078d4"}}
                     type="submit" 
                     className="btn btn-primary "        
                 >
@@ -423,8 +428,8 @@ const Calendarform = () => {
                         onChange={handleStartChange}
                          />
                          <input 
-                         style={{ width: "100px", marginLeft: "20px"}}
                          type="text"
+                         className="lb_box"
                          value={dsstarttime || "12:00 am"}
                          readOnly={true}
                           />
@@ -442,8 +447,8 @@ const Calendarform = () => {
                         onChange={handleEndChange} 
                         />
                         <input 
-                          style={{ width: "100px", marginLeft: "20px"}}
                           type="text"
+                          className="lb_box"
                           value={dsendtime || "12:00 am"}
                           readOnly={true}
                           />
@@ -507,15 +512,15 @@ const Calendarform = () => {
               />
               </div>
               <div className="form-group mx-auto" style={{textAlign:"end"}}> 
-              <button style={{backgroundColor:" #23497c"}}
-                    type="submit" 
-                    className="btn btn-primary "        
+              <button style={{backgroundColor:" #0078d4", width:"100px"}}
+                    type="button" 
+                    className="btn btn-primary"        
                 >
-                    Set Appointment
+                    Update 
                 </button>
                 <button
                   type="button" 
-                  style={{backgroundColor:" #23497c", width: "91px",height: "38px", marginLeft: "15px"}}
+                  style={{backgroundColor:" #0078d4", width: "91px",height: "38px", marginLeft: "15px"}}
                   onClick={handeleditcancel} 
                   className="btn btn-primary "
                   >Cancel</button>

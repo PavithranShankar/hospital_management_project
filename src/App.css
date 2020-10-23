@@ -304,7 +304,7 @@
 }
 
 .sch-modal .modal-header {
-  background: #23497c;
+  background: #0078d4;
   color: #fff;
   font-weight: bold;
 }
@@ -315,5 +315,34 @@
   border: none;
 }
 .dt_box {
+  background-color: hsl(0,0%,100%);
+    border-color: hsl(0,0%,80%);
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+    height: 35px;
   padding-right: 1px !important;
+}
+
+.lb_box {
+  background-color: hsl(0,0%,100%);
+    border-color: hsl(0,0%,80%);
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+    height: 35px;
+    width: 100px; 
+    margin-left: 20px;
+  padding-right: 1px !important;
+}
+
+.fc-scrollgrid-section-header {
+  background: #0078d4;
+  color: #fff;
+  font-weight: bold;
+}
+.fc-button-primary{
+  background: #0078d4;
+  color: #fff;
+  font-weight: bold;
 }
