@@ -24,74 +24,119 @@ const Calendarform = () => {
   const [title,settitle] = useState("");
   const [doctor,setdoctor] = useState("");
   const [startdateval,setstartdateval] = React.useState("");
+  const [dsstarttime,setdstarttime] = React.useState("");
+  const [dsendtime,setdsendtime] = React.useState("");
+  const [eventedit,seteventedit]= React.useState(false);
+  const [pastdate,setpastdate] = React.useState(false);
+  const CURRENT_DATE = new Date();
+  console.log("curdate",CURRENT_DATE);
 
   const hideModals = () => {
     setdateselect(false);
     seteventselect(false);
+    seteventedit(false);
+    seteventedit(false);
+    setpastdate(false);
   };
 
     const handleDateSelect = (arg) => {
-        setdateselect(true);
+      const date = arg.start;
+        if(date >= CURRENT_DATE){
+          setdateselect(true);
         setstart_date(arg.start);
         setend_date(arg.end);
-        console.log("dateclick", arg);
+      } else {
+        setpastdate(true);
+      }
       }
     
       const handleEventClick = (arg) => {
-        seteventselect(true);
+        
         const title = arg.event.title;
         const Doctor = arg.event.extendedProps.Doctor;
         const startdate = arg.event.start;
         const enddate = arg.event.end;
-        const value = new Date(startdate);
-        const endtime = new Date(enddate);
-        const days = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
-        const day = days[ value.getDay() ];
-        const month = new Array();
-          month[0] = "Jan";
-          month[1] = "Feb";
-          month[2] = "Mar";
-          month[3] = "Apr";
-          month[4] = "May";
-          month[5] = "Jun";
-          month[6] = "Jul";
-          month[7] = "Aug";
-          month[8] = "Sep";
-          month[9] = "Oct";
-          month[10] = "Nov";
-          month[11] = "Dec";
-          const n = month[value.getMonth()];   
-        const stdate = value.getDate();
-        const styear = value.getFullYear();
-        //console.log("valuedate",styear);
-        const v1 = value.getHours(); // => 9
-        const v2 = value.getMinutes();
+        console.log("doctorname",Doctor);
+        if(startdate < CURRENT_DATE){
+            const value = new Date(startdate);
+              const endtime = new Date(enddate);
+              const days = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
+              const day = days[ value.getDay() ];
+              const month = new Array();
+                month[0] = "Jan";
+                month[1] = "Feb";
+                month[2] = "Mar";
+                month[3] = "Apr";
+                month[4] = "May";
+                month[5] = "Jun";
+                month[6] = "Jul";
+                month[7] = "Aug";
+                month[8] = "Sep";
+                month[9] = "Oct";
+                month[10] = "Nov";
+                month[11] = "Dec";
+                const n = month[value.getMonth()];   
+              const stdate = value.getDate();
+              const styear = value.getFullYear();
+              //console.log("valuedate",styear);
+              const v1 = value.getHours(); // => 9
+              const v2 = value.getMinutes();
 
-        const startamorpm = v1 >= 12 ? "pm" : "am";
-        const hours = v1 % 12 || 12;
+              const startamorpm = v1 >= 12 ? "pm" : "am";
+              const hours = v1 % 12 || 12;
 
-        var e1 = endtime.getHours();
-        var e2 = endtime.getMinutes();
+              var e1 = endtime.getHours();
+              var e2 = endtime.getMinutes();
 
-        var endamorpm = e1 >= 12 ? "pm" : "am";
-        var hours1 = e1 % 12 || 12;
-        console.log("h",hours1);
-        setstartdateval( day+", " + n + 
-          " " + 
-        stdate + 
-        ", " + 
-        styear + 
-        ", " + 
-        ('0' + hours).slice(-2) + 
-        ":" + 
-        ('0' + v2).slice(-2) + 
-        " " +
-        startamorpm + " - " + ('0' + hours1).slice(-2) + ":" + ('0' + e2).slice(-2) + " " + endamorpm);
+              var endamorpm = e1 >= 12 ? "pm" : "am";
+              var hours1 = e1 % 12 || 12;
+              console.log("h",hours1);
+              setstartdateval( day+", " + n + 
+                " " + 
+              stdate + 
+              ", " + 
+              styear + 
+              ", " + 
+              ('0' + hours).slice(-2) + 
+              ":" + 
+              ('0' + v2).slice(-2) + 
+              " " +
+              startamorpm + " - " + ('0' + hours1).slice(-2) + ":" + ('0' + e2).slice(-2) + " " + endamorpm);
+              settitle(title);
+              setdoctor(Doctor);
+              setstart_date(startdate);
+              setend_date(enddate);
+              console.log("dateclick11", value);
+              seteventselect(true);
+      }
+      else{
+        const v1 = startdate.getHours(); // => 9
+          const v2 = startdate.getMinutes();
+
+          const startamorpm = v1 >= 12 ? "pm" : "am";
+          const hours = v1 % 12 || 12;
+          setdstarttime(('0' + hours).slice(-2) + 
+            ":" + 
+            ('0' + v2).slice(-2) + 
+            " " +
+            startamorpm);
+
+            const v3 = enddate.getHours(); // => 9
+          const v4 = enddate.getMinutes();
+
+          const endamorpm = v3 >= 12 ? "pm" : "am";
+          const hours1 = v3 % 12 || 12;
+          setdsendtime(('0' + hours1).slice(-2) + 
+            ":" + 
+            ('0' + v4).slice(-2) + 
+            " " +
+            endamorpm);
         settitle(title);
-        setdoctor(Doctor);
+        setdoctor(doctor);
         setstart_date(startdate);
         setend_date(enddate);
-        console.log("dateclick11", value);
+        seteventedit(true);
+      }
       }
   
   
@@ -131,11 +176,32 @@ const Calendarform = () => {
         };
         const handleStartChange = (date) => {
           const day = new Date(date).getDay();
-          console.log("edate",date);
+          const v1 = date.getHours(); // => 9
+          const v2 = date.getMinutes();
+
+          const startamorpm = v1 >= 12 ? "pm" : "am";
+          const hours = v1 % 12 || 12;
+          setdstarttime(('0' + hours).slice(-2) + 
+            ":" + 
+            ('0' + v2).slice(-2) + 
+            " " +
+            startamorpm);
+          console.log("edate",v1);
+          console.log("eday",day);
           setstart_date(date);
         };
         const handleEndChange = (date) => {
           const day = new Date(date).getDay();
+          const v1 = date.getHours(); // => 9
+          const v2 = date.getMinutes();
+
+          const startamorpm = v1 >= 12 ? "pm" : "am";
+          const hours = v1 % 12 || 12;
+          setdsendtime(('0' + hours).slice(-2) + 
+            ":" + 
+            ('0' + v2).slice(-2) + 
+            " " +
+            startamorpm);
           console.log("edate",date);
           setend_date(date);
         };
@@ -152,6 +218,12 @@ const Calendarform = () => {
           seteventselect(false);
         }
 
+        const handelcancel = () => {
+          setdateselect(false);
+        }
+        const handeleditcancel = () => {
+          seteventedit(false);
+        }
 
     return (
       <div>
@@ -172,8 +244,9 @@ const Calendarform = () => {
                 select={handleDateSelect}
                 eventClick={handleEventClick}
                 events={[
-                    { title: 'For Heart',Doctor: 'Ramesh',color: 'yellow', start: '2020-10-01T14:30:00',end:'2020-10-01T15:30:00' },
-                    { title: 'High Sugar',Doctor: 'Arunkumar',color: 'Blue', start: '2020-10-01T15:30:00',end:'2020-10-01T16:30:00' },
+                    { title: 'For Heart',Doctor: 'Ramesh', start: '2020-10-01T14:30:00',end:'2020-10-01T15:30:00' },
+                    { title: 'High Sugar',Doctor: 'Arunkumar', start: '2020-10-01T15:30:00',end:'2020-10-01T16:30:00' },
+                    { title: 'High Sugar',Doctor: 'Arunkumar', start: '2020-10-27T15:30:00',end:'2020-10-28T16:30:00' },
                 ]}
             />
       </div>
@@ -184,31 +257,46 @@ const Calendarform = () => {
         </Modal.Header>
         <Modal.Body style={{paddingLeft: "30px"}}>
         <AvForm className="register-form" onSubmit={Confirm} >
-
+                
                 <div className="form-group">
-              <label>Start {' '}</label>
+              <label style={{marginBottom:"-0.5rem"}}><b>Start</b></label>
                 <br />
                 <DatePicker
                         className="dt_box"
                         selected={start_date}
                         timeIntervals={30}
                         showTimeSelect
+                        required
                         onChange={handleStartChange}
                          />
+                         <input 
+                         style={{ width: "100px", marginLeft: "20px"}}
+                         type="text"
+                         value={dsstarttime || "12:00 am"}
+                         readOnly={true}
+                          />
                 </div>
+                
                 <div className="form-group">
-              <label>End {' '}</label>
+              <label style={{marginBottom:"-0.5rem"}}><b>End</b></label>
                 <br />
                 <DatePicker
                         className="dt_box"
                         selected={end_date}
                         timeIntervals={30}
                         showTimeSelect
+                        required
                         onChange={handleEndChange} 
                         />
+                        <input 
+                          style={{ width: "100px", marginLeft: "20px"}}
+                          type="text"
+                          value={dsendtime || "12:00 am"}
+                          readOnly={true}
+                          />
                 </div>
 
-        <div className="form-group">Doctor
+        <div className="form-group"><b>Doctor</b>
                 <Select
                               className="selectWidth"
                               components={{
@@ -226,7 +314,7 @@ const Calendarform = () => {
                             ></Select>
                 </div>
 
-                <div className="form-group">Reason
+                <div className="form-group"><b>Reason</b>
                 <Select
                               className="selectWidth"
                               components={{
@@ -265,13 +353,19 @@ const Calendarform = () => {
                 }}
               />
               </div>
-              <div className="form-group mx-auto" style={{textAlign:"center"}}> 
+              <div className="form-group mx-auto" style={{textAlign:"end"}}> 
               <button style={{backgroundColor:" #23497c"}}
                     type="submit" 
                     className="btn btn-primary "        
                 >
                     Set Appointment
                 </button>
+                <button
+                  type="button" 
+                  style={{backgroundColor:" #23497c", width: "91px",height: "38px", marginLeft: "15px"}}
+                  onClick={handelcancel} 
+                  className="btn btn-primary "
+                  >Cancel</button>
               </div>
         </AvForm>
         </Modal.Body>
@@ -286,7 +380,7 @@ const Calendarform = () => {
         <AvForm className="register-form" onSubmit={eventcancel} >
 
                 <div className="form-group">
-                <span><b>Title   :</b> {title} </span>{" "}
+                <span><b>Reason   :</b> {title} </span>{" "}
                 </div>
                 <div className="form-group">
                 <span><b>Doctor :</b> {doctor} </span>{" "}
@@ -306,6 +400,139 @@ const Calendarform = () => {
                 </button>
               </div>
         </AvForm>
+        </Modal.Body>
+      </Modal>
+      </div>
+      <div>
+      <Modal show={eventedit} onHide={hideModals} className="sch-modal">
+        <Modal.Header closeButton>
+          <h5>Edit Doctor Appointment</h5>
+        </Modal.Header>
+        <Modal.Body style={{paddingLeft: "30px"}}>
+        <AvForm className="register-form" onSubmit={Confirm} >
+                
+                <div className="form-group">
+              <label style={{marginBottom:"-0.5rem"}}><b>Start</b></label>
+                <br />
+                <DatePicker
+                        className="dt_box"
+                        selected={start_date}
+                        timeIntervals={30}
+                        showTimeSelect
+                        required
+                        onChange={handleStartChange}
+                         />
+                         <input 
+                         style={{ width: "100px", marginLeft: "20px"}}
+                         type="text"
+                         value={dsstarttime || "12:00 am"}
+                         readOnly={true}
+                          />
+                </div>
+                
+                <div className="form-group">
+              <label style={{marginBottom:"-0.5rem"}}><b>End</b></label>
+                <br />
+                <DatePicker
+                        className="dt_box"
+                        selected={end_date}
+                        timeIntervals={30}
+                        showTimeSelect
+                        required
+                        onChange={handleEndChange} 
+                        />
+                        <input 
+                          style={{ width: "100px", marginLeft: "20px"}}
+                          type="text"
+                          value={dsendtime || "12:00 am"}
+                          readOnly={true}
+                          />
+                </div>
+
+        <div className="form-group"><b>Doctor</b>
+        <br />
+                      <Select
+                              className="selectWidth"
+                              components={{
+                                IndicatorSeparator:()=>null,
+                                dropdownIndicator: defaultStyles => ({
+                                    ...defaultStyles,
+                                    '& svg': { display: 'none' }
+                                  })
+                              }}
+                              value={Doctor_List1}
+                              onChange={handleDocOption}
+                              clearable={false}
+                              searchable={true}
+                              options={doctor || Reason_List}
+                              ></Select>
+            </div>
+                <div className="form-group"><b>Reason</b>
+                <Select
+                              className="selectWidth"
+                              components={{
+                                IndicatorSeparator:()=>null,
+                                dropdownIndicator: defaultStyles => ({
+                                    ...defaultStyles,
+                                    '& svg': { display: 'none' }
+                                  })
+                              }}
+                              value={Reason1}
+                              onChange={handleReasonOption}
+                              clearable={false}
+                              searchable={true}
+                              options={Reason_List}
+                            ></Select>
+                </div>
+
+              <br/>
+
+        <div className="form-group">
+        <AvField
+                name="Reason_Box"
+                cols="3"
+                rows="3"
+                id="Reason_Box"
+                errorMessage="Please enter Reason in Detail"
+                type="textarea"
+                className="form-control"
+                placeholder="Please enter Reason in Detail"
+                value={Resonforvisit}
+                onChange={e => {
+                    setResonforvisit(e.target.value);
+                }}
+                validate={{
+                  required: { value: true }
+                }}
+              />
+              </div>
+              <div className="form-group mx-auto" style={{textAlign:"end"}}> 
+              <button style={{backgroundColor:" #23497c"}}
+                    type="submit" 
+                    className="btn btn-primary "        
+                >
+                    Set Appointment
+                </button>
+                <button
+                  type="button" 
+                  style={{backgroundColor:" #23497c", width: "91px",height: "38px", marginLeft: "15px"}}
+                  onClick={handeleditcancel} 
+                  className="btn btn-primary "
+                  >Cancel</button>
+              </div>
+        </AvForm>
+        </Modal.Body>
+      </Modal>
+      </div>
+      <div>
+      <Modal show={pastdate} onHide={hideModals} className="sch-modal">
+        <Modal.Header closeButton>
+          <h5>Warning !</h5>
+        </Modal.Header>
+        <Modal.Body>
+          <h5 style={{ color: "blue" }}>
+            Schedule cannot create for past date.
+          </h5>
         </Modal.Body>
       </Modal>
       </div>

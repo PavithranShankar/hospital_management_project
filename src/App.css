@@ -314,3 +314,6 @@
   opacity: 1;
   border: none;
 }
+.dt_box {
+  padding-right: 1px !important;
+}
