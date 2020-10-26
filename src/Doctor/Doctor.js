@@ -9,7 +9,7 @@ import { MDBDataTableV5 } from 'mdbreact';
       {
         label: 'S.No',
         field: 'sno',
-        width: 150,
+        width: 100,
         attributes: {
           'aria-controls': 'DataTable',
           'aria-label': 'Name',
@@ -31,13 +31,13 @@ import { MDBDataTableV5 } from 'mdbreact';
         label: 'Age',
         field: 'age',
         sort: 'asc',
-        width: 100,
+        width: 80,
       },
       {
         label: 'Appointment Date',
         field: 'date',
         sort: 'disabled',
-        width: 150,
+        width: 100,
       },
       
     ],
@@ -86,8 +86,10 @@ import { MDBDataTableV5 } from 'mdbreact';
   });
 
   return (
-  <MDBDataTableV5 
+  <MDBDataTableV5
   hover 
+  striped
+      bordered
   entriesOptions={[5, 20, 25]} 
   entries={5} 
   pagesAmount={4}

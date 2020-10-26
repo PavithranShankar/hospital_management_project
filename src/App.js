@@ -12,6 +12,11 @@ import Register_as_Doctor from './Authentication/Register_as_Doctor';
 import Register_as_Patient from './Authentication/Register_as_Patient';
 import Doctor_page from './Doctor/Doctor';
 import Calendarform from './Scheduler/Calendarform';
+import NavBar_Doctor from './Statup_Pages/NavBar_Doctor';
+import NavBar_Patient from './Statup_Pages/NavBar_Patient';
+import NavBar_dropdown from './Statup_Pages/NavBar_Dropdown';
+import ProfileForPatient from './Profile_Screen/Profile_Patient';
+import ChangePassword from './Authentication/ChangePassword';
 
 
 const App=()=>
@@ -21,6 +26,7 @@ const App=()=>
       <ToastProvider>
       <Router>
       <Nav_Bar/>
+      {/* <NavBar_dropdown/> */}
         <Switch>
           <Route path="/" exact component={Home}/>
           <Route path="/login" exact component={Login}/>         
@@ -31,10 +37,11 @@ const App=()=>
           <Route path="/Register_as_Patient" exact component={Register_as_Patient}/>
           <Route path="/Doctor_page" exact component={Doctor_page}/>
           <Route path="/calendar" exact component={Calendarform} />
-
-
-
-
+          <Route path="/NavBar_Doctor" exact component={NavBar_Doctor} />
+          <Route path="/NavBar_Patient" exact component={NavBar_Patient} />
+          <Route path="/NavBar_dropdown" exact component={NavBar_dropdown} />
+          <Route path="/ProfileForPatient" exact component={ProfileForPatient} />
+          <Route path="/ChangePassword" exact component={ChangePassword} />
 
         </Switch>
         {/* <HomeContent/> 

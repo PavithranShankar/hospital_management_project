@@ -7,7 +7,8 @@ import { useToasts } from "react-toast-notifications";
 
 
 const Register_as_Patient=()=>
-{const [Firstname,setFirstname]=useState("");
+{
+  const [Firstname,setFirstname]=useState("");
   const [Lastname,setLastname]=useState("");
   const [Email,setEmail]=useState("");  
   const [Password,setPassword]=useState("");
@@ -19,7 +20,7 @@ const Register_as_Patient=()=>
   const redirect=()=>
   {
     history.push({
-      pathname: "/patient",
+      pathname: "/calendar",
      
     });
   }
