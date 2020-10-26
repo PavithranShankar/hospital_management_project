@@ -17,6 +17,7 @@ import NavBar_Patient from './Statup_Pages/NavBar_Patient';
 import NavBar_dropdown from './Statup_Pages/NavBar_Dropdown';
 import ProfileForPatient from './Profile_Screen/Profile_Patient';
 import ChangePassword from './Authentication/ChangePassword';
+import Header from './Statup_Pages/Header';
 
 
 const App=()=>
@@ -25,11 +26,12 @@ const App=()=>
     <div >
       <ToastProvider>
       <Router>
-      <Nav_Bar/>
+      <Header/>
       {/* <NavBar_dropdown/> */}
         <Switch>
+          
           <Route path="/" exact component={Home}/>
-          <Route path="/login" exact component={Login}/>         
+          <Route path="/login" exact component={Login}/>       
           <Route path="/patient" exact component={Patient}/>
           <Route path="/contact_us" exact component={ContactUs}/>
           <Route path="/DatePickerPage" exact component={DatePickerPage}/>
@@ -44,7 +46,7 @@ const App=()=>
           <Route path="/ChangePassword" exact component={ChangePassword} />
 
         </Switch>
-        {/* <HomeContent/> 
+        {/* <HomeContent/>
          <Footer/> */}
       </Router>
 

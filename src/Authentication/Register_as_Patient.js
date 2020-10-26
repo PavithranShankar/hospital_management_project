@@ -2,6 +2,8 @@ import React,{useState} from "react";
 import { AvForm, AvField } from "availity-reactstrap-validation";
 import {Link,useHistory} from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
+import axios from "axios";
+import config from "../Config.json";
 
 
 
@@ -17,6 +19,8 @@ const Register_as_Patient=()=>
   const history=useHistory();
 
 
+  console.log("Register",(`${config.BASEURL}${config.PATIENT_REGISTER}`));
+
   const redirect=()=>
   {
     history.push({
@@ -25,8 +29,17 @@ const Register_as_Patient=()=>
     });
   }
 
+  let request_data=
+  {
+    firstname:Firstname,
+    lastname:Lastname,
+    username:Email,
+    pwd:Password
+  }
+
   const handle_Submit=(e)=>
   {
+    
     debugger;
     
     e.preventDefault();
@@ -74,34 +87,35 @@ const Register_as_Patient=()=>
     });
   }
   else{
-    let regarr=[];
 
-    regarr.push(Firstname);
-    regarr.push(Lastname);
-    regarr.push(Email);
-    regarr.push(Password);
-    regarr.push(Confirmpassword);
+      Response= axios.post(`${config.BASEURL}${config.PATIENT_REGISTER}`,request_data)
+      .then(res=>
+        {
+          addToast("Registration Successfully Completed!!!", {
+              appearance: "success",
+              autoDismiss: true
+            });
 
-    if(regarr[1]!=="" &&regarr[4]!=="")
-    {
+            console.log("Registration_Success_Response",res.data)
 
-      addToast("Registration Successfully Completed", {
-        appearance: "success",
-        autoDismiss: true
-      });
-      redirect();
+            redirect();
+            
 
-    }
-    else{
-      addToast("Registration Failed !", {
-        appearance: "error", 
-        autoDismiss: true
-      });
-    }
+        })
+        .catch(err=>
+          {
+            console.log("Registration_Error_Response",err.response)
+
+
+            addToast("Error in registering as Patient. Please try again after some time ", {
+              appearance: "error",
+              autoDismiss: true
+            });
+          });
 
   }
 
-  }
+  };
 
 
 

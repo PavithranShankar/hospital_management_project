@@ -2,6 +2,9 @@ import React,{useState} from "react";
 import { AvForm, AvField } from "availity-reactstrap-validation";
 import {Link,useHistory} from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
+import axios from "axios";
+import config from "../Config.json";
+
 
 
 
@@ -24,6 +27,15 @@ const Register_as_Doctor=()=>
        
       });
     }
+
+    let request_data=
+  {
+    firstname:Firstname,
+    lastname:Lastname,
+    username:Email,
+    pwd:Password
+  }
+  
 
     const handle_Submit=(e)=>
     {
@@ -74,34 +86,40 @@ const Register_as_Doctor=()=>
       });
     }
     else{
-      let regarr=[];
+      let fd=new FormData();
 
-      regarr.push(Firstname);
-      regarr.push(Lastname);
-      regarr.push(Email);
-      regarr.push(Password);
-      regarr.push(Confirmpassword);
+      // fd.append("username",email);
+      // fd.append("password",password);
+      // fd.append("grant_type","password");
 
-      if(regarr[1]!=="" &&regarr[4]!=="")
-      {
+      console.log("FD",request_data);
+      Response= axios.post(`${config.BASEURL}${config.DOCTOR_REGISTER}`,request_data)
+      .then(res=>
+        {
+          addToast("Registration Successfully Completed!!!", {
+              appearance: "success",
+              autoDismiss: true
+            });
 
-        addToast("Registration Successfully Completed", {
-          appearance: "success",
-          autoDismiss: true
-        });
-        redirect();
+            redirect();
+            
+            console.log("Registration_Success_Response",res.data)
 
-      }
-      else{
-        addToast("Registration Failed !", {
-          appearance: "error", 
-          autoDismiss: true
-        });
-      }
+        })
+        .catch(err=>
+          {
+            console.log("Login_Error_Response",err.response)
+
+
+            addToast("Error in registering as Doctor. Please try again after some time ", {
+              appearance: "error",
+              autoDismiss: true
+            });
+          });
 
     }
 
-    }
+    };
 
 
 

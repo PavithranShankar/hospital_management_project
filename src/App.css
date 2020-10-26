@@ -617,6 +617,7 @@ body {
 }
 
 .alert-primary {
+
   color: #004085;
   background-color: #cce5ff;
   border-color: #b8daff;
@@ -630,6 +631,7 @@ body {
   border: 1px solid transparent;
   border-radius: .25rem;
 }
+
 .dt_box {
   background-color: hsl(0,0%,100%);
     border-color: hsl(0,0%,80%);
