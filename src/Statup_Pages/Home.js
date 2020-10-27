@@ -4,6 +4,7 @@ import Navbar from "./Nav";
 
 const Home=()=>
 {
+  
     return(
 
         <div className="home" >

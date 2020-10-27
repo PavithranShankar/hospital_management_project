@@ -6,6 +6,14 @@ import * as serviceWorker from './serviceWorker';
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import "./fonts/AvenirNextLTPro-Regular.woff2";
+import "./fonts/AvenirNextLTPro-Regular.woff";
+import "./fonts/AvenirNextLTPro-Bold.woff2";
+import "./fonts/AvenirNextLTPro-Bold.woff";
+import "./fonts/AvenirNextLTPro-It.woff2";
+import "./fonts/AvenirNextLTPro-It.woff";
+
+
 
 // import 'bootstrap/dist/css/bootstrap.css';
 

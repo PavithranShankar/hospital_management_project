@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { AvForm, AvField } from "availity-reactstrap-validation";
 import {Link,useHistory} from "react-router-dom"
 import { useToasts } from "react-toast-notifications";
+import axios from "axios";
+import config from "../Config.json";
+import qs from "qs";
 
 
 const Login = () => {
@@ -9,6 +12,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const { addToast } = useToasts();
   const history =useHistory();
+
+  let Response;
 
   const redirect=()=>
   {
@@ -18,7 +23,24 @@ const Login = () => {
     });
   }
 
-  const handleSubmit = async e => {
+  let request_data=
+  {
+    username:email,
+    password:password,
+    grant_type:"password"
+  }
+
+  const Header = {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  }
+
+  console.log("reqdata",qs.stringify(request_data))
+
+
+  const handleSubmit =  e => {
+    debugger;
     
     e.preventDefault();
     if(email==="")
@@ -35,26 +57,56 @@ const Login = () => {
         autoDismiss: true
       });
     }
-    else if((email!=="")&&(password!==""))
-    {
-      addToast("Logged In Successfully!", {
-      appearance: "success",
-      autoDismiss: true
-    });
-    redirect();
+    // else if((email!=="")&&(password!==""))
+    // {
+    //   addToast("Logged In Successfully!", {
+    //   appearance: "success",
+    //   autoDismiss: true
+    // });
+    // redirect();
 
-    }
+    // }
+
+   
     else 
     {
-       addToast("Plz Check the UserName and Password!", {
-      appearance: "error",
-      autoDismiss: true
-    });
+      let fd=new FormData();
+
+      fd.append("username",email);
+      fd.append("password",password);
+      fd.append("grant_type","password")
+
+      console.log("FD",request_data);
+      Response= axios.post(`${config.BASEURL}${config.LOGIN}`,qs.stringify(request_data),Header)
+      .then(res=>
+        {
+          addToast("Logged In Successfully!!!", {
+              appearance: "success",
+              autoDismiss: true
+            });
+
+            redirect();
+            
+            console.log("Login_Success_Response",res.data)
+
+        })
+        .catch(err=>
+          {
+            console.log("Login_Error_Response",err.response)
+
+
+            addToast("Plz Check the UserName and Password!", {
+              appearance: "error",
+              autoDismiss: true
+            });
+          });
+      
+       
 
     }
        
 };
-
+console.log("Login_Response",Response);
 
   return(
 
@@ -68,7 +120,7 @@ const Login = () => {
 			    	<h3 className="panel-title">Login</h3>
 			 	</div>
 			  	<div className="panel-body">
-        <AvForm className="register-form" >
+        <AvForm className="register-form"  onSubmit={handleSubmit}>
 
         <div className="form-group">
         <AvField
@@ -110,8 +162,7 @@ const Login = () => {
                 <button 
                     type="submit" 
                     className="btn btn-lg btn-success btn-block"
-                    onClick={handleSubmit}
-                                     
+                                                        
                 >
                    Login
                 </button>

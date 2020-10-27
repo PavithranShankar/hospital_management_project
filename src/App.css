@@ -1,10 +1,91 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/react-datepicker/2.8.0/react-datepicker.min.css');
 
+@font-face {
+  font-family: "Avenir";
+  src: local("Avenir"),
+    url(./fonts/AvenirNextLTPro-Regular.woff2) format("woff2"),
+    url(./fonts/AvenirNextLTPro-Regular.woff) format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AvenirNext LT Pro";
+  src: local("AvenirNext LT Pro"),
+    url(./fonts/AvenirNextLTPro-Bold.woff2) format("woff2"),
+    url(./fonts/AvenirNextLTPro-Bold.woff) format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AvenirNext LT Pro It";
+  src: local("AvenirNext LT Pro It"),
+    url(./fonts/AvenirNextLTPro-It.woff2) format("woff2"),
+    url(./fonts/AvenirNextLTPro-It.woff) format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "objectivityblack";
+  src: url("./fonts/objectivity-black-webfont.woff2") format("woff2"),
+    url("./fonts/objectivity-black-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "objectivitybold";
+  src: url("./fonts/objectivity-bold-webfont.woff2") format("woff2"),
+    url("./fonts/objectivity-bold-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "objectivitylight";
+  src: url("./fonts/objectivity-light-webfont.woff2") format("woff2"),
+    url("./fonts/objectivity-light-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "objectivityregular";
+  src: url("./fonts/objectivity-regular-webfont.woff") format("woff2"),
+    url("./fonts/objectivity-regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "objectivitysuper";
+  src: url("./fonts/objectivity-super-webfont.woff2") format("woff2"),
+    url("./fonts/objectivity-super-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Raleway";
+  src: url("./fonts/raleway-regular-webfont.woff2") format("woff2"),
+    url("./fonts/raleway-regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 *{
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
   font-family : 'PT Sans', 'sans-serif'
+}
+body {
+
+  font-family: "objectivityregular" !important;
+  color: #2f3033;
+  font-size: 13px !important;
 }
 
 .home,
@@ -54,7 +135,7 @@
 
 .navbar {
   background: linear-gradient(90deg, rgb(89, 117, 240) 0%, rgb(107, 206, 231) 100%);
-  height: 80px;
+  height: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -217,7 +298,7 @@
 
 .btn_inch
 {
-  font-size: 1.5rem !important;
+  font-size: 1.1rem !important;
   color: #fff !important;
 }
 
@@ -314,6 +395,243 @@
   opacity: 1;
   border: none;
 }
+
+/* ---------------------------------------------------- */
+
+
+.drp_left
+{
+  left:-200px !important;
+}
+.drp_trans
+{
+  background-color: transparent !important;
+    border: none !important;
+}
+.card-header{
+  /* background-image: url('http://www.latestseotutorial.com/wp-content/uploads/2016/12/love-dp-for-facebook.jpg') !important; */
+  background-color: #fff;
+  padding: 0 !important;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  font-family: "objectivityregular" !important;
+  text-align:center;
+}
+.card{
+  overflow: hidden;
+  border:0 !important;
+  width: 350px;
+  box-shadow: 0px 0px 15px 1px;
+  -webkit-box-shadow:0px 0px 15px 1px;
+}
+.profile_pic{
+  position: absolute;
+  bottom: -50px;
+  height: 112px;
+  width: 112px;
+  padding: 5px;
+  border: 2px solid #f39c12;
+  border-radius: 50%;
+}
+.card-body{
+  padding-top: 55px !important;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.crd_brdr
+{
+  border-bottom: none !important;
+}
+.profile_pic img{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+}
+.name_container{
+  display: flex;
+  justify-content: center;
+
+}
+.name{
+  font-size: 20px;
+  font-weight: 700;
+  color: gray;
+  position: relative;
+}
+.name::after{
+  font-family: "Font Awesome 5 Free";
+  content: '\f058';
+  position: absolute;
+  right: -15px;
+  top:0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #4CAF50;
+}
+.address{
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+  color: gray;
+}
+.crd_widht
+{
+  max-width: 252px !important;
+}
+.follow{
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+.follow_btn{
+  background: #2196F3;
+  padding: 7px;
+  color: #fff;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.follow_btn::before{
+  font-family: "Font Awesome 5 Free";
+  content: "\f234";
+  font-weight: 600;
+  margin-right: 5px;
+
+
+
+}
+.follow_btn:hover{
+  background: #f39c12;
+}
+.info_container{
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+.info{
+  display: flex;
+  flex-direction: column;
+}
+.info p:first-child{
+  margin-bottom: 0;
+  font-size: 12px;
+  color: gray;
+  text-transform: uppercase;
+  text-align: center;
+}
+.info p:last-child{
+  margin-bottom: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: gray;
+  text-transform: uppercase;
+  text-align: center;
+}
+.card-footer{
+  padding: 0 !important;
+  background: #fff !important;
+  display: flex;
+  border-top: 0 !important;
+}
+.message{
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 50%;
+  text-transform: uppercase;
+  background: #f39c12;
+  color: #fff;
+  cursor: pointer;
+  border-bottom-right-radius: calc(0.25rem - 1px);
+}
+
+.message::before{
+  font-family: "Font Awesome 5 Free";
+  content: "\f27a";
+  font-weight: 600;
+  margin-right: 5px;
+}
+.view_profile{
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 100%;
+  text-transform: uppercase;
+  background: #59a8d8;
+  color: #fff;
+  cursor: pointer;
+  border-bottom-left-radius: calc(0.25rem - 1px);
+  
+}
+.view_profile::before{
+  font-family: "Font Awesome 5 Free";
+  content: "\f406";
+  margin-right: 5px;
+  font-weight: 600;
+}
+
+/*------------------------*/
+.login-inner {
+  width: 100%;
+  background: linear-gradient(45deg, #eef6f7, #eef6f7);
+  margin: 2em 0px;
+}
+
+.login-container #logreg-forms {
+  width: 100%;
+  margin: auto;
+  background-color: transparent;
+  /* box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); */
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: none !important;
+}
+
+#logreg-forms form {
+  width: 100%;
+  max-width: 410px;
+  padding: 15px;
+  margin: auto;
+}
+.form-group {
+  margin-bottom: 1rem;
+}
+.btn-orange .btn {
+  background-color: #ff7d00;
+  border: none;
+}
+.mb-3, .my-3 {
+  margin-bottom: 1rem!important;
+}
+
+.justify-content-between {
+  justify-content: space-between!important;
+}
+
+.d-flex {
+  display: flex!important;
+}
+
+.alert-primary {
+
+  color: #004085;
+  background-color: #cce5ff;
+  border-color: #b8daff;
+  
+}
+
+.alert {
+  position: relative;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+}
+
 .dt_box {
   background-color: hsl(0,0%,100%);
     border-color: hsl(0,0%,80%);

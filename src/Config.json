@@ -1,0 +1,6 @@
+{
+    "BASEURL":"http://localhost:53002/",
+    "LOGIN":"api/auth/token",
+    "DOCTOR_REGISTER":"api/doctor/register",
+    "PATIENT_REGISTER":"api/patient/register"
+}
