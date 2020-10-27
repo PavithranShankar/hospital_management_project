@@ -346,3 +346,16 @@
   color: #fff;
   font-weight: bold;
 }
+
+.fc .fc-popover-title {
+  margin: 0 2px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.fc .fc-popover-close {
+  cursor: pointer;
+  opacity: 0.65;
+  font-size: 1.1em;
+  color: #fff;
+}
