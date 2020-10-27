@@ -1,5 +1,6 @@
 import React, { Fragment,useState } from "react";
 import { Link,NavLink } from "react-router-dom";
+import NavBar_dropdown from "./NavBar_Dropdown";
 
 const NavBar_Patient = () => 
 {
@@ -25,7 +26,7 @@ const NavBar_Patient = () =>
                    
           <li className="nav-item">
             <Link
-              to="/contact_us"                         
+              to="/calendar"                
             >
               <button className ='btn btn_inch'>
              Book Appointment
@@ -33,12 +34,9 @@ const NavBar_Patient = () =>
               
             </Link>
           </li>
+          
           <li className="nav-item ">
-          <Link to='/Register_as_Doctor'>
-            <button className ='btn btn_inch'>
-               Logout
-            </button>
-        </Link>
+          <NavBar_dropdown/>
           </li>
                   </ul>
         {/* <Button /> */}

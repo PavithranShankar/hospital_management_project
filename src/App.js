@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Home from './Statup_Pages/Home';
-import{BrowserRouter as Router,Switch,Route} from "react-router-dom";
+import{BrowserRouter,Switch,Route} from "react-router-dom";
 import Login from './Authentication/Login';
 import Patient from './Patient/Patient';
 import { ToastProvider } from "react-toast-notifications";
@@ -22,15 +22,16 @@ import Header from './Statup_Pages/Header';
 
 const App=()=>
  {
+   
+ 
   return (
     <div >
       <ToastProvider>
-      <Router>
+      <BrowserRouter>
       <Header/>
-      {/* <NavBar_dropdown/> */}
         <Switch>
-          
           <Route path="/" exact component={Home}/>
+          {/* <Route path="/H" exact component={Header}/> */}
           <Route path="/login" exact component={Login}/>       
           <Route path="/patient" exact component={Patient}/>
           <Route path="/contact_us" exact component={ContactUs}/>
@@ -48,7 +49,7 @@ const App=()=>
         </Switch>
         {/* <HomeContent/>
          <Footer/> */}
-      </Router>
+      </BrowserRouter>
 
       </ToastProvider>
             

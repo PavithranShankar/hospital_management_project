@@ -15,11 +15,12 @@ const Login = () => {
 
   let Response;
 
+
+
   const redirect=()=>
   {
     history.push({
-      pathname: "/",
-     
+      pathname: "/",     
     });
   }
 
@@ -39,10 +40,11 @@ const Login = () => {
   console.log("reqdata",qs.stringify(request_data))
 
 
+
   const handleSubmit =  e => {
     debugger;
     
-    e.preventDefault();
+    // e.preventDefault();
     if(email==="")
     {
       addToast("Plz Enter the Valid UserName!", {
@@ -70,7 +72,17 @@ const Login = () => {
    
     else 
     {
+      debugger;
       let fd=new FormData();
+      
+      let auth= localStorage.setItem("isAuthenticated", "True");
+
+      let User= localStorage.setItem("User", "Patient");
+     
+
+      console.log("auth",auth)
+      console.log("User",User)
+
 
       fd.append("username",email);
       fd.append("password",password);
@@ -80,12 +92,16 @@ const Login = () => {
       Response= axios.post(`${config.BASEURL}${config.LOGIN}`,qs.stringify(request_data),Header)
       .then(res=>
         {
+
+
           addToast("Logged In Successfully!!!", {
               appearance: "success",
               autoDismiss: true
             });
 
             redirect();
+
+            window.location.reload();
             
             console.log("Login_Success_Response",res.data)
 

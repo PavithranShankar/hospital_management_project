@@ -15,15 +15,7 @@ const NavBar_dropdown=()=>
         <Fragment>
 
 <>
-<nav className="navbar">
-        <Link to="/" className="navbar-logo  mb-4">
-          Health Center 
-          <i className='fab fa-firstdraft'></i>
-        </Link>
-        <div className="menu-icon" onClick={handleClick}>
-          <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
-        </div>
-        <ul className={click ? "nav-menu active" : "nav-menu"}>
+
           
           <li className="nav-item ">
           <a
@@ -96,7 +88,9 @@ const NavBar_dropdown=()=>
                     </div>
                     <div className="card-footer">
                       <div className="view_profile" >
+                        <Link to="/login">
                         Logout
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -107,9 +101,7 @@ const NavBar_dropdown=()=>
         </li>
           
           
-                  </ul>
-       
-      </nav>
+               
     </>           
     </Fragment>
         
