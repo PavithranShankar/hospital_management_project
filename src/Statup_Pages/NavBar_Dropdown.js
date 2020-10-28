@@ -77,6 +77,7 @@ const NavBar_dropdown=()=>
         
                       </div>
                     </div>
+                    <hr/>
                     <div className="card-body">
                       <div className="d-lfex justify-content-center flex-column">
                         <div className="name_container"></div>
@@ -97,6 +98,7 @@ const NavBar_dropdown=()=>
                                                 
                         {/* <li className="divider"></li> */}
                         <br></br>
+                        <hr/>
                         <Link  
                           to={{
                             pathname: "/ChangePassword",

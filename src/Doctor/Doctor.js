@@ -13,6 +13,7 @@ import { MDBDataTableV5 } from 'mdbreact';
         attributes: {
           'aria-controls': 'DataTable',
           'aria-label': 'Name',
+          sort:"asc"
         },
         
       },
@@ -36,7 +37,19 @@ import { MDBDataTableV5 } from 'mdbreact';
       {
         label: 'Appointment Date',
         field: 'date',
-        sort: 'disabled',
+        sort: 'asc',
+        width: 100,
+      },
+      {
+        label: 'StartTime',
+        field: 'StdTime',
+        sort: 'asc',
+        width: 100,
+      },
+      {
+        label: 'EndTime',
+        field: 'EdTime',
+        sort: 'asc',
         width: 100,
       },
       
@@ -47,39 +60,49 @@ import { MDBDataTableV5 } from 'mdbreact';
         name: 'Kumar',
         reason: 'For FullBody Checkup',
         age: '61',
-        date: '2011/04/25',
+        date: '2020/10/25',
+        StdTime:"2:30 Pm",
+        EdTime:"3:30 Pm"
        
       },
       {
         sno: '2',
         name: 'Raj',
         reason: 'For Normal Checkup',
-        age: '61',
-        date: '2011/04/25',
+        age: '28',
+        date: '2020/10/22',
+        StdTime:"11:30 Am",
+        EdTime:"12:30 Pm"
        
       },
       {
         sno: '3',
         name: 'Suresh',
         reason: 'For Heart',
-        age: '61',
-        date: '2011/04/25',
+        age: '35',
+        date: '2020/10/26',
+        StdTime:"6:30 Pm",
+        EdTime:"7:30 Pm"
        
       },
       {
         sno: '4',
         name: 'Vinoth',
         reason: 'For Depression',
-        age: '61',
-        date: '2011/04/25',
+        age: '18',
+        date: '2020/10/27',
+        StdTime:"7:30 Am",
+        EdTime:"8:30 Am"
        
       },
       {
         sno: '5',
         name: 'Siva',
         reason: 'For Headache',
-        age: '61',
-        date: '2011/04/25',
+        age: '55',
+        date: '2020/10/25',
+        StdTime:"5:30 Pm",
+        EdTime:"6:30 Pm"
        
       },
     ],

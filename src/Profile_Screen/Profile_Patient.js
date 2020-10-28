@@ -3,22 +3,39 @@ import { useHistory } from "react-router-dom";
 import { AvForm, AvField } from "availity-reactstrap-validation";
 import { useToasts } from "react-toast-notifications";
 import Select from "react-select";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import ReactTooltip from "react-tooltip";
+import Moment from "moment";
+import axios from "axios";
+import config from "../Config.json";
+
 
 const ProfileForPatient = (props) => {
   
   const history = useHistory();
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [userid,setuserid]=useState("");
+
+  let User_Data=JSON.parse(localStorage.getItem("UserData"));
+
+  console.log("User_Data",User_Data)
+  const [firstname, setFirstname] = useState(User_Data.Firstname);
+  const [lastname, setLastname] = useState(User_Data.Lastname);
+  const [userid,setuserid]=useState(User_Data.Id);
   // const [age,setage]=useState("");
-  const [age, setage] = useState("");
-  const [email, setEmail] = useState("");
-  const [token, setToken] = useState("");
+  const [age, setage] = useState("25");
+  const [email, setEmail] = useState(User_Data.Username);
+  const [token, setToken] = useState(User_Data.access_token);
   const [imagee, setimage] = useState("");
   const [imagefilename, setimagefilename] = useState("");
   const [newimage, setnewimage] = useState("");
+  const [Date_value, setDate_value] = useState("");
+  const today = new Date();
+  const dateMDY = Moment(today).format("YYYY-MM-DD");
+  const min_date = new Date("1900-01-01");
+  const min_dob = Moment(min_date).format("YYYY-MM-DD");
 
-  const[gender,setgender]=useState([{value:0,label:"Male"}]);
+  const[gender,setgender]=useState([
+    {value:0,label:User_Data.Gender}]);
 
   const gender_list=[
       {value:0,label:"Male"},
@@ -27,6 +44,13 @@ const ProfileForPatient = (props) => {
 
   const { addToast } = useToasts();
 
+  const handle_time_change = (date_value) => {
+    setDate_value(date_value.target.value);
+
+    //console.log("datevalue", date_value);
+  }
+
+  console.log("datevalue", Date_value);
 
   const handleGenOption = Gen => {
 
@@ -52,8 +76,9 @@ const ProfileForPatient = (props) => {
 
  
 
-  const MainFunction = (e) =>
+  const handleSubmit = (e) =>
    {
+     e.preventDefault();
    
     if (firstname === "") {
       addToast("Please enter the First Name", {
@@ -65,21 +90,72 @@ const ProfileForPatient = (props) => {
         appearance: "error",
         autoDismiss: true,
       });
-    } else if (age.length > 110 || age.length < 110 || age==null) {
+    } else if (age.length > 2 || age.length < 2 || age==null) {
       addToast("Please enter the valid Mobile Number", {
         appearance: "error",
         autoDismiss: true,  
       });
+    }
+      else if (Date_value === "") {
+        addToast("Please enter the Date Of Birth", {
+          appearance: "error",
+          autoDismiss: true,
+        });
+      
+      
     } else {
+      
+      let gen=gender.map((i)=>
+      {
+       return i.label
+      })
 
-      setimagefilename("");
-      setimage("");
 
-      addToast("Profile updated successfully!", {
-        appearance: "success",
-        autoDismiss: true,
-      });
-      history.push("/");
+      console.log("gen",gen);
+
+      let gen1=gen[0];
+    
+      console.log("gen1",gen1);
+
+      let requestBody={};
+
+      requestBody={
+        AccountID:userid,
+        Firstname:firstname,
+        Lastname:lastname,
+        DoB:Date_value,
+        Age:age,
+        Gender:gen[0]
+      }
+
+      axios.post(`${config.BASEURL}${config.UPDATE_PROFILE}`,requestBody)
+      .then(res=>
+        {
+          console.log("requestBody",requestBody)
+          setimagefilename("");
+          setimage("");
+          
+          console.log("Profile_Update_Success_Response",res.data);
+
+          addToast("Profile updated successfully!", {
+            appearance: "success",
+            autoDismiss: true,
+          });
+          history.push("/");
+        })
+        .catch(err=>
+          {
+
+            console.log("Response",err.response);
+
+            addToast("Profile Not Updated!", {
+              appearance: "error",
+              autoDismiss: true,
+            });
+
+          })
+
+     
     }
   };
   
@@ -89,7 +165,7 @@ const ProfileForPatient = (props) => {
     <div className="d-flex justify-content-center align-items-center login-container">
       <div className="login-inner">
         <div id="logreg-forms" className="pro-form">
-          <AvForm className="form-signin" >
+          <AvForm className="form-signin" onSubmit={handleSubmit} >
             <h1 className="h3" style={{ textAlign: "center" }}>
               Profile
             </h1>
@@ -132,6 +208,71 @@ const ProfileForPatient = (props) => {
                 maxLength: { value: 150 },
               }}
             />
+            
+            <div className="form-group row col-sm-12">
+              <div className="col-sm-11 pr-0"> 
+
+              
+            <AvField
+                    name="DOB"
+                    errorMessage="Please enter the DOB"
+                    type="date"
+                    id="dob"
+                    required
+                    className="form-control"
+                    placeholder="DOB"
+                    value={Date_value}
+                    onChange= {handle_time_change
+                      
+                    }
+                    
+                    validate={{
+                      required: { value: true },
+                      dateRange: {
+                        // format: "MM/DD/YYYY",
+                        start: { value: "01/01/1900" },
+                        end: { value: today }
+                      }
+                    }}
+                    
+                  />
+                  </div>
+                  <div className="col-sm-1 px-1">
+                  <label
+                    style={{ marginTop: ".5rem" }}
+                    data-tip
+                    data-for="DoBTip"
+                  >
+                    <i className="fa fa-question-circle fa-2x"></i>
+                  </label>
+
+                  <ReactTooltip id="DoBTip" place="top" effect="solid">
+                    Date of Birth
+                  </ReactTooltip>
+                  </div>
+                  </div>
+
+                {/* <div className="form-group ">                    
+                      <DatePicker
+                      placeholder="Date Of Birth"
+                        className="form-control"
+                        selected={Date_value}
+                        onChange={handle_time_change} />
+                        &nbsp;
+                        <label
+                    style={{ marginTop: ".5rem" }}
+                    data-tip
+                    data-for="DoBTip"
+                  >
+                    <i className="fa fa-question-circle fa-2x"></i>
+                  </label>
+
+                  <ReactTooltip id="DoBTip" place="top" effect="solid">
+                    Date of Birth
+                  </ReactTooltip>
+
+
+                    </div> */}
 
             <AvField
               name="age"
@@ -168,6 +309,7 @@ const ProfileForPatient = (props) => {
                         placeholder="Gender"
                         onChange={handleGenOption}
                         clearable={false}
+                        value={gender}
                         searchable={true}
                         options={gender_list}
                       ></Select>
@@ -217,7 +359,7 @@ const ProfileForPatient = (props) => {
               </div>
             </div>
             <br />
-            <button className="btn btn-primary btn-block" type="submit">
+            <button className="btn btn-primary btn-block" type="submit" >
               Update
             </button>
           </AvForm>
