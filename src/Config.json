@@ -2,5 +2,9 @@
     "BASEURL":"http://localhost:53002/",
     "LOGIN":"api/auth/token",
     "DOCTOR_REGISTER":"api/doctor/register",
-    "PATIENT_REGISTER":"api/patient/register"
+    "PATIENT_REGISTER":"api/patient/register",
+    "DOCTOR_APPOINTMENT":"api/doctor/appointment/",
+    "PATIENT_APPOINTMENT":"api/patients/appointment/",
+    "ADD_APPOINTMENT":"api/patient/appointment",
+    "UPDATE_APPOINTMENT":"api/patient/updateappointment"
 }

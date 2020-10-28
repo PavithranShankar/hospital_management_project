@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -10,6 +10,10 @@ import Select from "react-select";
 import { confirmAlert } from "react-confirm-alert";
 import "react-datepicker/dist/react-datepicker.css";
 import { useToasts } from "react-toast-notifications";
+import Config from "../Config.json";
+import axios from "axios";
+import EventIcon from '@material-ui/icons/Event';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
 const Calendarform = () => { 
 
@@ -17,18 +21,23 @@ const Calendarform = () => {
   const [eventselect, seteventselect] = React.useState(false);
   const[Resonforvisit,setResonforvisit]=useState("");
   const{addToast}=useToasts();
-  const [Doctor_List1, setDoctor_List1] = useState([{ value: 0, label: "Dr.Vignesh" }]);
+  const [Doctor_List1, setDoctor_List1] = useState([]);
   const [Reason1, setReason1] = useState([{ value: 0, label: "For FullBody Checkup" }]);
   const [start_date,setstart_date] = useState("");
   const [end_date,setend_date]= useState("");
   const [title,settitle] = useState("");
   const [doctor,setdoctor] = useState("");
-  const [startdateval,setstartdateval] = React.useState("");
-  const [dsstarttime,setdstarttime] = React.useState("");
-  const [dsendtime,setdsendtime] = React.useState("");
-  const [eventedit,seteventedit]= React.useState(false);
-  const [pastdate,setpastdate] = React.useState(false);
+  const [startdateval,setstartdateval] = useState("");
+  const [dsstarttime,setdstarttime] = useState("");
+  const [dsendtime,setdsendtime] = useState("");
+  const [eventedit,seteventedit]= useState(false);
+  const [pastdate,setpastdate] = useState(false);
   const CURRENT_DATE = new Date();
+  const [patientevent,setpatientevent] = useState([]);
+  const [event,setevent] = useState({});
+  const [initialized, setInitialized] = useState(false);
+  const [count, setCount] = useState(0);
+  const [notes,setnotes] = useState("");
   console.log("curdate",CURRENT_DATE);
 
   const hideModals = () => {
@@ -37,8 +46,14 @@ const Calendarform = () => {
     seteventedit(false);
     seteventedit(false);
     setpastdate(false);
+    setstart_date("");
+    setend_date("");
+    settitle("");
+    setdoctor("");
     setstartdateval("");
+    setdstarttime("");
     setdsendtime("");
+    setnotes("");
   };
 
     const handleDateSelect = (arg) => {
@@ -47,6 +62,7 @@ const Calendarform = () => {
           setdateselect(true);
         setstart_date(arg.start);
         setend_date(arg.end);
+        console.log("arg",arg);
       } else {
         setpastdate(true);
       }
@@ -55,10 +71,11 @@ const Calendarform = () => {
       const handleEventClick = (arg) => {
         
         const title = arg.event.title;
+        const Notes = arg.event.extendedProps.Notes;
         const Doctor = arg.event.extendedProps.Doctor;
         const startdate = arg.event.start;
         const enddate = arg.event.end;
-        console.log("doctorname",Doctor);
+        console.log("doctorname",arg);
         if(startdate < CURRENT_DATE){
             const value = new Date(startdate);
               const endtime = new Date(enddate);
@@ -108,6 +125,7 @@ const Calendarform = () => {
               setdoctor(Doctor);
               setstart_date(startdate);
               setend_date(enddate);
+              setnotes(Notes);
               console.log("dateclick11", value);
               seteventselect(true);
       }
@@ -135,6 +153,7 @@ const Calendarform = () => {
             endamorpm);
         settitle(title);
         setdoctor(doctor);
+        setnotes(Notes);
         setstart_date(startdate);
         setend_date(enddate);
         seteventedit(true);
@@ -216,20 +235,76 @@ const Calendarform = () => {
             autoDismiss: true
           });
         }
-        const eventcancel = () => {
-          seteventselect(false);
-        }
 
         const handelcancel = () => {
           setdateselect(false);
-        }
-        const handeleditcancel = () => {
+          seteventselect(false);
           seteventedit(false);
+          setstart_date("");
+          setend_date("");
+          settitle("");
+          setdoctor("");
+          setstartdateval("");
+          setdstarttime("");
+          setdsendtime("");
+
         }
+
+          const ShowEvent = () => {
+            const data = "306fb64a-2177-49ba-809d-823113026190";
+            axios.get(`${Config.BASEURL}${Config.PATIENT_APPOINTMENT}${data}`)
+            .then((res) => {
+              const value = res.data.map((d) => {
+                return{
+                  ...d,
+                  id:d.AppointmentID,
+                  title:d.ShortDescription,
+                  description:d.Notes,
+                  start:d.StartTime,
+                  end:d.EndTime,
+                  IsActive:d.IsActive,
+                  PatientID:d.PatientID,
+                  DoctorID:d.DoctorID
+                }
+              });
+              setpatientevent(value);
+            });
+            setInitialized(true);
+          }
+
+          const handleTitleChange = (ev) => settitle(ev.target.value);
+
+          useEffect(()=>{
+            if (!initialized) {
+              ShowEvent();
+            }
+          },[]);
+          console.log("event",notes);          
+          console.log("eventpatient",patientevent);
+        
 
     return (
       <div>
+        
         <div id='calendar-container'>
+          <div style={{marginTop:"20px",marginLeft:"197px",marginRight:"197px"}}>
+                <Select
+                              className="selectWidth"
+                              components={{
+                                IndicatorSeparator:()=>null,
+                                dropdownIndicator: defaultStyles => ({
+                                    ...defaultStyles,
+                                    '& svg': { display: 'none' }
+                                  })
+                              }}
+                              value={Doctor_List1}
+                              placeholder="Select a Doctor"
+                              onChange={handleDocOption}
+                              clearable={false}
+                              searchable={true}
+                              options={Doctor_List}
+                            ></Select>
+                </div>
             <FullCalendar
                 plugins={[ dayGridPlugin, timeGridPlugin, interactionPlugin ]}
                 initialView="dayGridMonth"
@@ -245,11 +320,8 @@ const Calendarform = () => {
                 weekends={true}
                 select={handleDateSelect}
                 eventClick={handleEventClick}
-                events={[
-                    { title: 'For Heart',Doctor: 'Ramesh', start: '2020-10-01T14:30:00',end:'2020-10-01T15:30:00' },
-                    { title: 'High Sugar',Doctor: 'Arunkumar', start: '2020-10-01T15:30:00',end:'2020-10-01T16:30:00' },
-                    { title: 'High Sugar',Doctor: 'Arunkumar', start: '2020-10-27T15:30:00',end:'2020-10-28T16:30:00' },
-                ]}
+                events={patientevent}
+                //eventContent={patientevent}
             />
             <div>
               <p>Footer</p>
@@ -273,13 +345,14 @@ const Calendarform = () => {
                         showTimeSelect
                         required
                         onChange={handleStartChange}
-                         />
+                         ></DatePicker>
+                         <EventIcon />
                          <input 
                          className="lb_box"
                          type="text"
                          value={dsstarttime || "12:00 am"}
                          readOnly={true}
-                          />
+                          /><AccessTimeIcon />
                 </div>
                 
                 <div className="form-group">
@@ -293,50 +366,22 @@ const Calendarform = () => {
                         required
                         onChange={handleEndChange} 
                         />
+                        <EventIcon />
                         <input
                           className="lb_box"
                           type="text"
                           value={dsendtime || "12:00 am"}
                           readOnly={true}
-                          />
-                </div>
-
-        <div className="form-group"><b>Doctor</b>
-                <Select
-                              className="selectWidth"
-                              components={{
-                                IndicatorSeparator:()=>null,
-                                dropdownIndicator: defaultStyles => ({
-                                    ...defaultStyles,
-                                    '& svg': { display: 'none' }
-                                  })
-                              }}
-                              value={Doctor_List1}
-                              onChange={handleDocOption}
-                              clearable={false}
-                              searchable={true}
-                              options={Doctor_List}
-                            ></Select>
+                          /><AccessTimeIcon />
                 </div>
 
                 <div className="form-group"><b>Reason</b>
-                <Select
-                              className="selectWidth"
-                              components={{
-                                IndicatorSeparator:()=>null,
-                                dropdownIndicator: defaultStyles => ({
-                                    ...defaultStyles,
-                                    '& svg': { display: 'none' }
-                                  })
-                              }}
-                              value={Reason1}
-                              onChange={handleReasonOption}
-                              clearable={false}
-                              searchable={true}
-                              options={Reason_List}
-                            ></Select>
+                  <input type="text" 
+                    className="Title"
+                    placeholder="Enter Reason"
+                    value={title || ""}
+                    onChange={handleTitleChange} />
                 </div>
-
               <br/>
 
         <div className="form-group">
@@ -349,7 +394,7 @@ const Calendarform = () => {
                 type="textarea"
                 className="form-control"
                 placeholder="Please enter Reason in Detail"
-                value={Resonforvisit}
+                value={notes}
                 onChange={e => {
                     setResonforvisit(e.target.value);
                 }}
@@ -382,10 +427,13 @@ const Calendarform = () => {
           <h5>Schedule Info</h5>
         </Modal.Header>
         <Modal.Body style={{paddingLeft: "30px"}}>
-        <AvForm className="register-form" onSubmit={eventcancel} >
+        <AvForm className="register-form" onSubmit={handelcancel} >
 
                 <div className="form-group">
                 <span><b>Reason   :</b> {title} </span>{" "}
+                </div>
+                <div className="form-group">
+                <span><b>Reason in Detail   :</b> {notes} </span>{" "}
                 </div>
                 <div className="form-group">
                 <span><b>Doctor :</b> {doctor} </span>{" "}
@@ -399,7 +447,8 @@ const Calendarform = () => {
               <div className="form-group mx-auto" style={{textAlign:"center"}}> 
               <button style={{backgroundColor:" #0078d4"}}
                     type="submit" 
-                    className="btn btn-primary "        
+                    className="btn btn-primary "  
+                    onClick={handelcancel}      
                 >
                     Cancel
                 </button>
@@ -415,7 +464,6 @@ const Calendarform = () => {
         </Modal.Header>
         <Modal.Body style={{paddingLeft: "30px"}}>
         <AvForm className="register-form" onSubmit={Confirm} >
-                
                 <div className="form-group">
               <label style={{marginBottom:"-0.5rem"}}><b>Start</b></label>
                 <br />
@@ -426,13 +474,14 @@ const Calendarform = () => {
                         showTimeSelect
                         required
                         onChange={handleStartChange}
-                         />
+                         /><EventIcon />
                          <input 
                          type="text"
                          className="lb_box"
                          value={dsstarttime || "12:00 am"}
                          readOnly={true}
-                          />
+                         disabled={true}
+                          /><AccessTimeIcon />
                 </div>
                 
                 <div className="form-group">
@@ -445,53 +494,22 @@ const Calendarform = () => {
                         showTimeSelect
                         required
                         onChange={handleEndChange} 
-                        />
+                        /><EventIcon />
                         <input 
                           type="text"
                           className="lb_box"
                           value={dsendtime || "12:00 am"}
                           readOnly={true}
-                          />
+                          /><AccessTimeIcon />
                 </div>
-
-        <div className="form-group"><b>Doctor</b>
-        <br />
-                      <Select
-                              className="selectWidth"
-                              components={{
-                                IndicatorSeparator:()=>null,
-                                dropdownIndicator: defaultStyles => ({
-                                    ...defaultStyles,
-                                    '& svg': { display: 'none' }
-                                  })
-                              }}
-                              value={Doctor_List1}
-                              onChange={handleDocOption}
-                              clearable={false}
-                              searchable={true}
-                              options={doctor || Reason_List}
-                              ></Select>
-            </div>
                 <div className="form-group"><b>Reason</b>
-                <Select
-                              className="selectWidth"
-                              components={{
-                                IndicatorSeparator:()=>null,
-                                dropdownIndicator: defaultStyles => ({
-                                    ...defaultStyles,
-                                    '& svg': { display: 'none' }
-                                  })
-                              }}
-                              value={Reason1}
-                              onChange={handleReasonOption}
-                              clearable={false}
-                              searchable={true}
-                              options={Reason_List}
-                            ></Select>
+                  <input type="text" 
+                    className="Title"
+                    placeholder="Schedule Info"
+                    value={title || ""}
+                    onChange={handleTitleChange} />
                 </div>
-
               <br/>
-
         <div className="form-group">
         <AvField
                 name="Reason_Box"
@@ -502,7 +520,7 @@ const Calendarform = () => {
                 type="textarea"
                 className="form-control"
                 placeholder="Please enter Reason in Detail"
-                value={Resonforvisit}
+                value={notes || ""}
                 onChange={e => {
                     setResonforvisit(e.target.value);
                 }}
@@ -521,7 +539,7 @@ const Calendarform = () => {
                 <button
                   type="button" 
                   style={{backgroundColor:" #0078d4", width: "91px",height: "38px", marginLeft: "15px"}}
-                  onClick={handeleditcancel} 
+                  onClick={handelcancel} 
                   className="btn btn-primary "
                   >Cancel</button>
               </div>

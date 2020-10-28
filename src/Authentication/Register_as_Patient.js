@@ -6,8 +6,6 @@ import axios from "axios";
 import config from "../Config.json";
 
 
-
-
 const Register_as_Patient=()=>
 {
   const [Firstname,setFirstname]=useState("");
@@ -116,10 +114,6 @@ const Register_as_Patient=()=>
   }
 
   };
-
-
-
-
   
   return(
       <React.Fragment>
@@ -240,8 +234,6 @@ const Register_as_Patient=()=>
       </div>
     
       </React.Fragment>
-
-     
   );
 };
 
