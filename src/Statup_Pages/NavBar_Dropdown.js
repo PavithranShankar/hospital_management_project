@@ -1,15 +1,39 @@
 import React,{useState,Fragment} from "react";
-import {Link} from "react-router-dom";
+import {Link,useHistory} from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 
 
 const NavBar_dropdown=()=>
 {
 
     let con_val='Consumer';
-
+    
+    const history=useHistory();
     const [click, setClick] = useState(false);
+    const { addToast } = useToasts();
 
     const handleClick = () => setClick(!click);
+
+    const handlelogout=()=>
+    {
+      localStorage.clear();
+
+      history.push(
+        {
+          pathname:"/"
+        }
+      )
+      addToast("SuccessFully LogOut!!! ", {
+        appearance: "Success",
+        autoDismiss: true
+      });
+
+      window.location.reload();
+
+
+
+      
+    }
 
     return (
         <Fragment>
@@ -87,10 +111,10 @@ const NavBar_dropdown=()=>
                       </div>
                     </div>
                     <div className="card-footer">
-                      <div className="view_profile" >
-                        <Link to="/login">
+                      <div className="view_profile" onClick={handlelogout}>
+                        
                         Logout
-                        </Link>
+                        
                       </div>
                     </div>
                   </div>

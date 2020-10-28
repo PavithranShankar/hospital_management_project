@@ -115,10 +115,7 @@ const Login = () => {
               appearance: "error",
               autoDismiss: true
             });
-          });
-      
-       
-
+          });     
     }
        
 };
