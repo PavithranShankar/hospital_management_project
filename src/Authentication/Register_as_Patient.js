@@ -27,6 +27,7 @@ const Register_as_Patient=()=>
     });
   }
 
+
   let request_data=
   {
     firstname:Firstname,
@@ -34,6 +35,8 @@ const Register_as_Patient=()=>
     username:Email,
     pwd:Password
   }
+  
+
 
   const handle_Submit=(e)=>
   {
