@@ -14,6 +14,7 @@ import Config from "../Config.json";
 import axios from "axios";
 import EventIcon from '@material-ui/icons/Event';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import Doctorlist from "./Doctorlist";
 
 const Calendarform = () => { 
 
@@ -38,6 +39,11 @@ const Calendarform = () => {
   const [initialized, setInitialized] = useState(false);
   const [count, setCount] = useState(0);
   const [notes,setnotes] = useState("");
+  const [invalidfield,setinvalidfield] = useState(false);
+  const [selectdoctor,setselectdoctor] = useState(false);
+  const [appointmentid,setappointmentid] = useState("");
+
+  const [doctorlist, setdoctorlist] = useState(null);
   console.log("curdate",CURRENT_DATE);
 
   const hideModals = () => {
@@ -46,6 +52,8 @@ const Calendarform = () => {
     seteventedit(false);
     seteventedit(false);
     setpastdate(false);
+    setinvalidfield(false);
+    setselectdoctor(false);
     setstart_date("");
     setend_date("");
     settitle("");
@@ -54,15 +62,21 @@ const Calendarform = () => {
     setdstarttime("");
     setdsendtime("");
     setnotes("");
+    setappointmentid("");
   };
 
     const handleDateSelect = (arg) => {
+      
       const date = arg.start;
         if(date >= CURRENT_DATE){
-          setdateselect(true);
-        setstart_date(arg.start);
-        setend_date(arg.end);
-        console.log("arg",arg);
+          if(doctorlist != null){
+            setdateselect(true);
+            setstart_date(arg.start);
+            setend_date(arg.end);
+            console.log("arg",arg);
+          } else {
+            setselectdoctor(true);
+          }
       } else {
         setpastdate(true);
       }
@@ -73,9 +87,10 @@ const Calendarform = () => {
         const title = arg.event.title;
         const Notes = arg.event.extendedProps.Notes;
         const Doctor = arg.event.extendedProps.Doctor;
+        const appointmentidval = arg.event.extendedProps.AppointmentID;
         const startdate = arg.event.start;
         const enddate = arg.event.end;
-        console.log("doctorname",arg);
+        console.log("argvalue",arg);
         if(startdate < CURRENT_DATE){
             const value = new Date(startdate);
               const endtime = new Date(enddate);
@@ -126,6 +141,7 @@ const Calendarform = () => {
               setstart_date(startdate);
               setend_date(enddate);
               setnotes(Notes);
+              setappointmentid(appointmentidval);
               console.log("dateclick11", value);
               seteventselect(true);
       }
@@ -156,45 +172,11 @@ const Calendarform = () => {
         setnotes(Notes);
         setstart_date(startdate);
         setend_date(enddate);
+        setappointmentid(appointmentidval);
         seteventedit(true);
       }
       }
   
-  
-      const Doctor_List = [
-          { value: 0, label: "Dr.Vignesh" },
-          { value: 1, label: "Dr.Aravind" },
-          { value: 2, label: "Dr.Raja" },
-          { value: 3, label: "Dr.Rajinikanth" },
-          { value: 4, label: "Dr.Shankar" },
-          { value: 5, label: "Dr.Vinoth" }
-        ];
-  
-        const Reason_List = [
-          { value: 0, label: "For FullBody Checkup" },
-          { value: 1, label: "For Normal Checkup" },
-          { value: 2, label: "For Heart" },
-          { value: 3, label: "For Depression" },
-          { value: 4, label: "For Headache" },
-          { value: 5, label: "For Bone" }
-        ];
-  
-        console.log("Doctor_List",Doctor_List)
-  
-        const handleDocOption = Doc => {
-             
-          setDoctor_List1(Doc);
-  
-          console.log("Doctor_List1",Doc)
-        };
-  
-  
-        const handleReasonOption = ReasonSelect => {
-             
-          setReason1(ReasonSelect);
-  
-          console.log("Reason",ReasonSelect)
-        };
         const handleStartChange = (date) => {
           const day = new Date(date).getDay();
           const v1 = date.getHours(); // => 9
@@ -207,8 +189,8 @@ const Calendarform = () => {
             ('0' + v2).slice(-2) + 
             " " +
             startamorpm);
-          console.log("edate",v1);
-          console.log("eday",day);
+          // console.log("edate",v1);
+           console.log("date",date);
           setstart_date(date);
         };
         const handleEndChange = (date) => {
@@ -227,13 +209,64 @@ const Calendarform = () => {
           setend_date(date);
         };
   
-        const Confirm = () => 
+        const Confirm = async (ev) => 
         {
-          setdateselect(false);
-          addToast("Appointment set Successfully!", {
-            appearance: "success",
-            autoDismiss: true
-          });
+          ev.preventDefault();
+          const doctorname = doctorlist.value;
+          const startdval = start_date;
+          const enddval = end_date;
+          const reason =  title;
+          const reasondetails = Resonforvisit;
+          const requestbody = { PatientId: "", DoctorId: "", StartTime: "", EndTime: "", ShortDescription: "",Notes: "" };
+          requestbody.PatientId = "306fb64a-2177-49ba-809d-823113026190";
+          requestbody.DoctorId = doctorname;
+          requestbody.StartTime = startdval;
+          requestbody.EndTime = enddval;
+          requestbody.ShortDescription = reason;
+          requestbody.Notes = reasondetails;
+          
+              if(reason !== ""){
+                if(reasondetails !== ""){
+                  axios.post(`${Config.BASEURL}${Config.ADD_APPOINTMENT}`,
+                  requestbody )
+                  .then((res)=> {
+                    const data = res.data;
+                    console.log("added",data);
+                  });
+                  
+                  setdateselect(false);
+                  ShowEvent();
+                  addToast("Appointment set Successfully!", {
+                    appearance: "success",
+                    autoDismiss: true
+                  });
+                } else {
+                  setinvalidfield(true);
+                }
+              } else {
+                setinvalidfield(true);
+              }
+        }
+        const invalid = () => {
+          setinvalidfield(false);
+          setdateselect(true);
+        }
+        const confirmupdate =async (ev) => {
+          ev.preventDefault();
+          const doctorname = doctorlist.value;
+          const startdval = start_date;
+          const enddval = end_date;
+          const reason =  title;
+          const reasondetails = Resonforvisit;
+          const requestbody = { AppointmentID: "",PatientId: "", DoctorId: "", StartTime: "", EndTime: "",IsActive: "",
+                               ShortDescription: "",Notes: "",CreatedDate: new Date() };
+          requestbody.PatientId = "306fb64a-2177-49ba-809d-823113026190";
+          requestbody.DoctorId = doctorname;
+          requestbody.StartTime = startdval;
+          requestbody.EndTime = enddval;
+          requestbody.ShortDescription = reason;
+          requestbody.Notes = reasondetails;
+
         }
 
         const handelcancel = () => {
@@ -250,11 +283,13 @@ const Calendarform = () => {
 
         }
 
-          const ShowEvent = () => {
-            const data = "306fb64a-2177-49ba-809d-823113026190";
-            axios.get(`${Config.BASEURL}${Config.PATIENT_APPOINTMENT}${data}`)
+          const ShowEvent = async () => {
+            if(doctorlist != null){
+            const data = doctorlist.value;
+            axios.get(`${Config.BASEURL}${Config.DOCTOR_APPOINTMENT}${data}`)
             .then((res) => {
-              const value = res.data.map((d) => {
+              const value = 
+              res.data.map((d) => {
                 return{
                   ...d,
                   id:d.AppointmentID,
@@ -267,19 +302,45 @@ const Calendarform = () => {
                   DoctorID:d.DoctorID
                 }
               });
-              setpatientevent(value);
+               setpatientevent(value);
             });
+          } else {
+            const data = "306fb64a-2177-49ba-809d-823113026190";
+            axios.get(`${Config.BASEURL}${Config.PATIENT_APPOINTMENT}${data}`)
+            .then((res) => {
+              const value = 
+              res.data.map((d) => {
+                return{
+                  ...d,
+                  id:d.AppointmentID,
+                  title:d.ShortDescription,
+                  description:d.Notes,
+                  start:d.StartTime,
+                  end:d.EndTime,
+                  IsActive:d.IsActive,
+                  PatientID:d.PatientID,
+                  DoctorID:d.DoctorID
+                }
+              });
+               setpatientevent(value);
+            });
+          }
             setInitialized(true);
           }
 
           const handleTitleChange = (ev) => settitle(ev.target.value);
 
+
+          // useEffect(()=>{
+          //   if (!initialized) {
+          //     ShowEvent();
+          //     getdoctorlist();
+          //   }
+          // },[doctorlist]);
           useEffect(()=>{
-            if (!initialized) {
               ShowEvent();
-            }
-          },[]);
-          console.log("event",notes);          
+          },[doctorlist]);
+          console.log("event",doctorlist);          
           console.log("eventpatient",patientevent);
         
 
@@ -288,22 +349,7 @@ const Calendarform = () => {
         
         <div id='calendar-container'>
           <div style={{marginTop:"20px",marginLeft:"197px",marginRight:"197px"}}>
-                <Select
-                              className="selectWidth"
-                              components={{
-                                IndicatorSeparator:()=>null,
-                                dropdownIndicator: defaultStyles => ({
-                                    ...defaultStyles,
-                                    '& svg': { display: 'none' }
-                                  })
-                              }}
-                              value={Doctor_List1}
-                              placeholder="Select a Doctor"
-                              onChange={handleDocOption}
-                              clearable={false}
-                              searchable={true}
-                              options={Doctor_List}
-                            ></Select>
+                  <Doctorlist values={doctorlist} onChange={(val) => setdoctorlist(val)} />
                 </div>
             <FullCalendar
                 plugins={[ dayGridPlugin, timeGridPlugin, interactionPlugin ]}
@@ -463,7 +509,7 @@ const Calendarform = () => {
           <h5>Edit Doctor Appointment</h5>
         </Modal.Header>
         <Modal.Body style={{paddingLeft: "30px"}}>
-        <AvForm className="register-form" onSubmit={Confirm} >
+        <AvForm className="register-form" onSubmit={confirmupdate} >
                 <div className="form-group">
               <label style={{marginBottom:"-0.5rem"}}><b>Start</b></label>
                 <br />
@@ -555,6 +601,35 @@ const Calendarform = () => {
         <Modal.Body>
           <h5 style={{ color: "blue" }}>
             Schedule cannot create for past date.
+          </h5>
+        </Modal.Body>
+      </Modal>
+      </div>
+      <div>
+      <Modal show={invalidfield} className="sch-modal">
+        <Modal.Header>
+          <h5>Warning !</h5>
+        </Modal.Header>
+        <Modal.Body>
+          <h5 style={{ color: "blue" }}>
+            Schedule cannot create for past date.
+          </h5>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            onClick={invalid}
+            >Cancel</button>
+        </Modal.Footer>
+      </Modal>
+      </div>
+      <div>
+      <Modal show={selectdoctor} onHide={hideModals} className="sch-modal">
+        <Modal.Header closeButton>
+          <h5>Warning !</h5>
+        </Modal.Header>
+        <Modal.Body>
+          <h5 style={{ color: "blue" }}>
+            Please select a doctor
           </h5>
         </Modal.Body>
       </Modal>
