@@ -7,5 +7,7 @@
     "PATIENT_APPOINTMENT":"api/patients/appointment/",
     "ADD_APPOINTMENT":"api/patient/appointment",
     "UPDATE_APPOINTMENT":"api/patient/updateappointment",
-    "DOCTOR_LIST":"api/patients/doctors"
+    "DOCTOR_LIST":"api/patients/doctors",
+    "UPDATE_PROFILE":"/api/user/update",
+    "CHANGE_PASSWORD":"api/user/changepassword"
 }

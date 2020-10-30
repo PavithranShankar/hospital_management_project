@@ -75,13 +75,8 @@ const Login = () => {
       debugger;
       let fd=new FormData();
       
-      let auth= localStorage.setItem("isAuthenticated", "True");
+          
 
-      let User= localStorage.setItem("User", "Patient");
-     
-
-      console.log("auth",auth)
-      console.log("User",User)
 
 
       fd.append("username",email);
@@ -93,6 +88,13 @@ const Login = () => {
       .then(res=>
         {
 
+          let auth= localStorage.setItem("isAuthenticated", "True");
+
+            console.log("Response",res.data);
+
+          localStorage.setItem("UserData",JSON.stringify(res.data));
+
+          let User= localStorage.setItem("User",res.data.UserRole);
 
           addToast("Logged In Successfully!!!", {
               appearance: "success",
@@ -101,8 +103,9 @@ const Login = () => {
 
             redirect();
 
-            window.location.reload();
-            
+             //let User= localStorage.setItem("User", "Doctor");
+
+            window.location.reload();          
             console.log("Login_Success_Response",res.data)
 
         })
@@ -115,10 +118,7 @@ const Login = () => {
               appearance: "error",
               autoDismiss: true
             });
-          });
-      
-       
-
+          });     
     }
        
 };

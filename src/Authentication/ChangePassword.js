@@ -2,15 +2,23 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import { AvForm, AvField } from "availity-reactstrap-validation";
+import axios from "axios";
+import config from "../Config.json";
 
 const ChangePassword = props => {
   const history = useHistory();
+
+  let User_Data=JSON.parse(localStorage.getItem("UserData"));
+
+  const [Userid,setUserid]=useState(User_Data.Id);
+
   const { addToast } = useToasts();
   const [oldPassword, setoldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
 
  
+  console.log("Userid",Userid);
 
   const validate = () => {
     const errors = {};
@@ -93,11 +101,37 @@ const ChangePassword = props => {
   
 
   const handleChangePasswordResponse = () => {
-    addToast("Password changed successfully!", {
-      appearance: "success",
-      autoDismiss: true
-    });
-    history.push("/");
+
+      let requestBody={};
+
+      requestBody={
+        AccountID:Userid,
+        Pwd:password
+      }
+
+    axios.post(`${config.BASEURL}${config.CHANGE_PASSWORD}`,requestBody)
+    .then(res=>
+      {
+
+        console.log("Password_Update_Success_Response",res.data);
+
+        addToast("Password changed successfully!", {
+          appearance: "success",
+          autoDismiss: true
+        });
+        history.push("/");
+
+      })
+      .catch(err=>
+        {
+          addToast("Password Not Updated!!!", {
+            appearance: "error",
+            autoDismiss: true
+          });
+
+        });
+
+    
   };
   return (
     <React.Fragment>
