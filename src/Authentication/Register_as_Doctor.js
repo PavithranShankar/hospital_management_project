@@ -22,8 +22,10 @@ const Register_as_Doctor=()=>
 
     const redirect=()=>
     {
+      localStorage.clear();
+
       history.push({
-        pathname: "/Doctor_page",
+        pathname: "/login",
        
       });
     }

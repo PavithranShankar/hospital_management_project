@@ -18,6 +18,8 @@ import NavBar_dropdown from './Statup_Pages/NavBar_Dropdown';
 import ProfileForPatient from './Profile_Screen/Profile_Patient';
 import ChangePassword from './Authentication/ChangePassword';
 import Header from './Statup_Pages/Header';
+import ProfileForDoctor from './Profile_Screen/Profile_Doctor';
+import NavBar_dropdown_Doctor from './Statup_Pages/NavBar_Dropdown_Doctor';
 
 
 const App=()=>
@@ -43,8 +45,12 @@ const App=()=>
           <Route path="/NavBar_Doctor" exact component={NavBar_Doctor} />
           <Route path="/NavBar_Patient" exact component={NavBar_Patient} />
           <Route path="/NavBar_dropdown" exact component={NavBar_dropdown} />
+          <Route path="/NavBar_dropdown_Doctor" exact component={NavBar_dropdown_Doctor} />
           <Route path="/ProfileForPatient" exact component={ProfileForPatient} />
+          <Route path="/ProfileForDoctor" exact component={ProfileForDoctor} />
           <Route path="/ChangePassword" exact component={ChangePassword} />
+
+          ProfileForDoctor
 
         </Switch>
         {/* <HomeContent/>

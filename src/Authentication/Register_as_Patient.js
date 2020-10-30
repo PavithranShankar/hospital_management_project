@@ -23,8 +23,9 @@ const Register_as_Patient=()=>
 
   const redirect=()=>
   {
+    localStorage.clear();
     history.push({
-      pathname: "/calendar",
+      pathname: "/login",
      
     });
   }
