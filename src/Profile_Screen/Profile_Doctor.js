@@ -11,7 +11,7 @@ import axios from "axios";
 import config from "../Config.json";
 
 
-const ProfileForPatient = (props) => {
+const ProfileForDoctor = (props) => {
   
   const history = useHistory();
 
@@ -28,11 +28,26 @@ const ProfileForPatient = (props) => {
   const [imagee, setimage] = useState("");
   const [imagefilename, setimagefilename] = useState("");
   const [newimage, setnewimage] = useState("");
-  const [Date_value, setDate_value] = useState(User_Data.DoB);
+   const [Date_value, setDate_value] = useState(Moment(User_Data.DoB).format("YYYY-MM-DD"));
   const today = new Date();
   const dateMDY = Moment(today).format("YYYY-MM-DD");
   const min_date = new Date("1900-01-01");
   const min_dob = Moment(min_date).format("YYYY-MM-DD");
+
+ 
+  let Dob_fmt= Moment(User_Data.DoB).format("L");
+  let Dob_Value= Moment(Dob_fmt).format("YYYY-MM-DD");
+  let Dob= Moment(User_Data.DoB).format("L");
+  let val= Moment(User_Data.DoB).format("YYYY-MM-DD");
+
+
+
+ console.log("Dob",Dob);
+ console.log("val",val);
+
+
+
+ 
 
   const[gender,setgender]=useState([
     {value:0,label:User_Data.Gender}]);
@@ -78,6 +93,7 @@ const ProfileForPatient = (props) => {
 
   const handleSubmit = (e) =>
    {
+    debugger;
      e.preventDefault();
    
     if (firstname === "") {
@@ -105,23 +121,8 @@ const ProfileForPatient = (props) => {
       
     } else {
 
-      debugger;
-      
-      // let gen=gender.map((i)=>
-      // {
-      //  return i.label
-      // })
-
-      // let gen =gender.label;
-
-
-      // console.log("gen",gen);
-
-      // let gen1=gen[0];
-    
-      // console.log("gen1",gen1);
-
       let requestBody={};
+
 
       requestBody={
         AccountID:userid,
@@ -131,6 +132,7 @@ const ProfileForPatient = (props) => {
         Age:age,
         Gender:gender.label
       }
+    
 
       axios.post(`${config.BASEURL}${config.UPDATE_PROFILE}`,requestBody)
       .then(res=>
@@ -311,7 +313,12 @@ const ProfileForPatient = (props) => {
                         }}
                         
                         placeholder="Gender"
-                        onChange={handleGenOption}
+                        // onChange={handleGenOption}
+                        onChange={e=>
+                        {
+                            setgender(e.target.value);
+                        }}
+
                         clearable={false}
                         value={gender}
                         searchable={true}
@@ -373,4 +380,4 @@ const ProfileForPatient = (props) => {
   );
 };
 
-export default ProfileForPatient;
+export default ProfileForDoctor;
